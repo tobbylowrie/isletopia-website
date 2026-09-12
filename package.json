@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "vitepress": "^2.0.0-alpha.20"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev --host",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "dependencies": {
+    "busuanzi.pure.js": "^1.0.3"
+  }
+}

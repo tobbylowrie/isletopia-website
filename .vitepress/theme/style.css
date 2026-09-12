@@ -1,0 +1,371 @@
+/**
+ * Customize default theme styling by overriding CSS variables:
+ * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
+ */
+
+/**
+ * Colors
+ *
+ * Each colors have exact same color scale system with 3 levels of solid
+ * colors with different brightness, and 1 soft color.
+ *
+ * - `XXX-1`: The most solid color used mainly for colored text. It must
+ *   satisfy the contrast ratio against when used on top of `XXX-soft`.
+ *
+ * - `XXX-2`: The color used mainly for hover state of the button.
+ *
+ * - `XXX-3`: The color for solid background, such as bg color of the button.
+ *   It must satisfy the contrast ratio with pure white (#ffffff) text on
+ *   top of it.
+ *
+ * - `XXX-soft`: The color used for subtle background such as custom container
+ *   or badges. It must satisfy the contrast ratio when putting `XXX-1` colors
+ *   on top of it.
+ *
+ *   The soft color must be semi transparent alpha channel. This is crucial
+ *   because it allows adding multiple "soft" colors on top of each other
+ *   to create an accent, such as when having inline code block inside
+ *   custom containers.
+ *
+ * - `default`: The color used purely for subtle indication without any
+ *   special meanings attached to it such as bg color for menu hover state.
+ *
+ * - `brand`: Used for primary brand colors, such as link text, button with
+ *   brand theme, etc.
+ *
+ * - `tip`: Used to indicate useful information. The default theme uses the
+ *   brand color for this by default.
+ *
+ * - `warning`: Used to indicate warning to the users. Used in custom
+ *   container, badges, etc.
+ *
+ * - `danger`: Used to show error, or dangerous message to the users. Used
+ *   in custom container, badges, etc.
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-c-default-1: var(--vp-c-gray-1);
+  --vp-c-default-2: var(--vp-c-gray-2);
+  --vp-c-default-3: var(--vp-c-gray-3);
+  --vp-c-default-soft: var(--vp-c-gray-soft);
+
+  --vp-c-brand-1: var(--vp-c-indigo-1);
+  --vp-c-brand-2: var(--vp-c-indigo-2);
+  --vp-c-brand-3: var(--vp-c-indigo-3);
+  --vp-c-brand-soft: var(--vp-c-indigo-soft);
+
+  --vp-c-tip-1: var(--vp-c-brand-1);
+  --vp-c-tip-2: var(--vp-c-brand-2);
+  --vp-c-tip-3: var(--vp-c-brand-3);
+  --vp-c-tip-soft: var(--vp-c-brand-soft);
+
+  --vp-c-warning-1: var(--vp-c-yellow-1);
+  --vp-c-warning-2: var(--vp-c-yellow-2);
+  --vp-c-warning-3: var(--vp-c-yellow-3);
+  --vp-c-warning-soft: var(--vp-c-yellow-soft);
+
+  --vp-c-danger-1: var(--vp-c-red-1);
+  --vp-c-danger-2: var(--vp-c-red-2);
+  --vp-c-danger-3: var(--vp-c-red-3);
+  --vp-c-danger-soft: var(--vp-c-red-soft);
+}
+
+/**
+ * Component: Button
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: var(--vp-c-white);
+  --vp-button-brand-bg: var(--vp-c-brand-3);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: var(--vp-c-white);
+  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: var(--vp-c-white);
+  --vp-button-brand-active-bg: var(--vp-c-brand-1);
+}
+
+/**
+ * Component: Home
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #bd34fe 50%,
+    #47caff 50%
+  );
+  --vp-home-hero-image-filter: blur(44px);
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+
+@media (min-width: 60rem) {
+  :root {
+    --vp-home-hero-image-filter: blur(68px);
+  }
+}
+
+/**
+ * Component: Custom Block
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-custom-block-tip-border: transparent;
+  --vp-custom-block-tip-text: var(--vp-c-text-1);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-soft);
+  --vp-custom-block-tip-code-bg: var(--vp-c-brand-soft);
+}
+
+/**
+ * Component: 首页视频区内容（index.md 中 <VideoBackground> 插槽内）
+ * -------------------------------------------------------------------------- */
+
+.hero-logo {
+  width: 10rem;
+  height: auto;
+  margin: 0 0 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .hero-logo {
+    width: 12rem;
+  }
+}
+
+.hero-title,
+.hero-text {
+  margin: 0;
+  width: fit-content;
+  max-width: 24.5rem;
+  line-height: 1.25;
+  font-size: 2rem;
+  font-weight: 700;
+  white-space: pre-wrap;
+}
+
+@media (min-width: 40rem) {
+  .hero-title,
+  .hero-text {
+    max-width: 36rem;
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 60rem) {
+  .hero-title,
+  .hero-text {
+    font-size: 3.5rem;
+  }
+}
+
+.hero-title {
+  color: #fff;
+}
+
+.hero-tagline {
+  margin: 0.75rem 0 0;
+  max-width: 36rem;
+  line-height: 1.5;
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 2rem 0 0;
+}
+
+/* 首屏底部下滑提示（index.md 中 <VideoBackground> 插槽内）。
+   绝对定位在视频区底部，不参与中部内容的垂直居中 */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-scroll-hint__text {
+  font-size: 0.875rem;
+  letter-spacing: 0.125rem;
+}
+
+.hero-scroll-hint__arrow {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: currentColor;
+  animation: hero-scroll-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(0.5rem);
+    opacity: 1;
+  }
+}
+
+/* 用户偏好减少动态效果时停掉箭头动画 */
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-hint__arrow {
+    animation: none;
+  }
+}
+
+/**
+ * Component: Nav（仅首页）— 夜间风格配色，独立于站点明/暗模式
+ *
+ * 主题在首页自动给导航栏加 `.home` 类；颜色参数全部集中在下方 :root 的
+ * `--vp-home-nav-*` 变量中（唯一调整处）。所有规则都挂在
+ * `html.home-over-video` 下（由 theme/index.ts 的滚动监听维护，仅当导航栏
+ * 还覆盖在全屏视频区域内时存在）：滚出视频区后整栏回落到 VitePress 原版
+ * 自适应明暗外观。
+ * -------------------------------------------------------------------------- */
+
+/* 首页导航栏配色（唯一调整处） */
+:root {
+  --vp-home-nav-bg: rgba(13, 17, 23, 0.55);           /* 栏背景：半透明深色 */
+  --vp-home-nav-bg-elv: rgba(13, 17, 23, 0.92);       /* 浮层背景：二级下拉面板，比栏背景更实 */
+  --vp-home-nav-text: #ffffff;                         /* 主文字：标题 / 菜单链接 / 汉堡线 */
+  --vp-home-nav-text-2: rgba(255, 255, 255, 0.8);      /* 次级文字：社交图标等 */
+  --vp-home-nav-text-3: rgba(255, 255, 255, 0.6);      /* 三级文字 */
+  --vp-home-nav-divider: rgba(255, 255, 255, 0.2);     /* 栏内区块分隔符 */
+  --vp-home-nav-divider-line: rgba(255, 255, 255, 0.1); /* 底部分隔线，比栏内分隔符更淡 */
+  --vp-home-nav-brand: #a8b1ff;                        /* 品牌色：当前页导航项（固定，取暗色值） */
+  --vp-home-nav-brand-hover: #5c73e7;                  /* 品牌悬停色：导航项 / 下拉项 hover */
+}
+
+/* 映射层：映射到默认主题变量，仅首页导航栏内、且导航栏还在视频区域内生效 */
+html.home-over-video .Layout .VPNavBar.home {
+  --vp-c-text-1: var(--vp-home-nav-text);
+  --vp-c-text-2: var(--vp-home-nav-text-2);
+  --vp-c-text-3: var(--vp-home-nav-text-3);
+  --vp-c-divider: var(--vp-home-nav-divider);
+  --vp-c-bg-elv: var(--vp-home-nav-bg-elv);
+  --vp-c-brand-1: var(--vp-home-nav-brand);
+  --vp-c-brand-2: var(--vp-home-nav-brand-hover);
+  --vp-nav-bg-color: var(--vp-home-nav-bg);
+  --vp-nav-home-bg-color: var(--vp-home-nav-bg);
+  /* 主题对"首页已滚动"下边线用的是此变量（优先级高于下方直接规则），一并映射到淡色 */
+  --vp-nav-divider-color: var(--vp-home-nav-divider-line);
+}
+
+/* 标题文字固定夜间配色，直接指定不依赖变量继承 */
+html.home-over-video .Layout .VPNavBar.home .VPNavBarTitle .title {
+  color: var(--vp-home-nav-text);
+}
+
+/* 视频区域内已滚动（无 .top）：背景为夜间底色 + 底部分隔线。默认主题在
+   <60rem 把首页硬编码为透明，需显式覆盖，保证任意宽度 / 菜单打开状态一致 */
+html.home-over-video .Layout .VPNavBar.home::before {
+  background-color: var(--vp-home-nav-bg);
+}
+
+html.home-over-video .Layout .VPNavBar.home .divider-line {
+  background-color: var(--vp-home-nav-divider-line);
+}
+
+/* 页面顶部（.top，必然在视频区域内）：背景完全透明、无分隔线、无毛玻璃
+   （主题仅在 ≥60rem 时置 backdrop-filter: none，此处显式覆盖全宽度） */
+html.home-over-video .Layout .VPNavBar.home.top::before {
+  background-color: transparent;
+  backdrop-filter: none;
+}
+
+html.home-over-video .Layout .VPNavBar.home.top .divider-line {
+  background-color: transparent;
+}
+
+/* 抽屉打开时（.screen-open）：导航栏背景、毛玻璃、分隔线全部让位，
+   整屏只剩抽屉一层 0.55 背景 + 毛玻璃，避免顶部 5rem 双层叠加
+   （0.55×2 + 双份模糊）比抽屉其余部分更深，形成色差带 */
+html.home-over-video .Layout .VPNavBar.home.screen-open::before {
+  background-color: transparent;
+  backdrop-filter: none;
+}
+
+html.home-over-video .Layout .VPNavBar.home.screen-open .divider-line {
+  background-color: transparent;
+}
+
+/* 滚出视频区（无 html.home-over-video）：恢复原版外观。
+   主题在 <60rem 按"导航栏随页面滚动"把首页背景保持透明，而本站导航栏
+   固定悬浮，需补实底背景（--vp-nav-bg-color 默认即原版色），
+   否则透明栏会悬在内容上方；≥60rem 时与主题默认规则同值，不冲突 */
+html:not(.home-over-video) .VPNavBar.home::before {
+  background-color: var(--vp-nav-bg-color);
+}
+
+/* 手机端：抽屉面板与导航栏同一逻辑——夜间配色仅在导航栏处于视频区域内
+   （html.home-over-video）时生效，滚出视频区后整栏连同抽屉一起回落到
+   原版自适应明暗（实底 --vp-c-bg）。毛玻璃与导航栏共用 .VPNav 层变量 */
+html.home-over-video .VPNav:has(.VPNavBar.home) .VPNavScreen {
+  --vp-nav-screen-bg-color: var(--vp-home-nav-bg);
+  --vp-c-text-1: var(--vp-home-nav-text);
+  --vp-c-text-2: var(--vp-home-nav-text-2);
+  --vp-c-text-3: var(--vp-home-nav-text-3);
+  --vp-c-divider: var(--vp-home-nav-divider);
+  backdrop-filter: var(--vp-nav-backdrop-filter);
+}
+
+/* 手机端导航也悬浮在视频上方，与桌面端一致（≥60rem 时主题本身即 fixed）。
+   毛玻璃变量定义在此（.VPNav 层）：导航栏背景层与抽屉面板都是其后代，
+   共同继承，改一处即全站同步。配合半透明的 --vp-home-nav-bg 生效，
+   导航栏 .top 透明状态下被置为 none。饱和度 200% 让磨砂后色彩更鲜活 */
+.VPNav:has(.VPNavBar.home) {
+  position: fixed;
+  --vp-nav-backdrop-filter: saturate(200%) blur(8px);
+}
+
+/* 自定义样式 */
+:root {
+  --vp-nav-height: 5rem;
+  --vp-nav-logo-height: 3rem;
+}
+
+/* 导航栏 logo 与站点标题的间距（主题默认 0.5rem） */
+.VPNavBarTitle .logo {
+  margin-right: 2rem;
+}
+
+/* 导航栏站点标题字号（主题默认 1rem） */
+.VPNavBarTitle .title {
+  font-size: 1.25rem;
+}
+
+/* 外观切换：去掉默认背景色
+ * 主题源码中仅移动端导航抽屉的 .VPNavScreenAppearance 行带
+ * var(--vp-c-bg-soft) 背景（scoped 样式，特异性较高，需父选择器对齐） */
+.VPNavAppearance,
+.appearance {
+  background-color: transparent;
+}
+
+.VPNavScreen .VPNavScreenAppearance {
+  background-color: transparent;
+}
+
+/* 外观切换图标保持黑色：首页夜间导航栏把 --vp-c-text-1 映射为白色，
+   站点为深色模式时图标随 .dark 规则取 text-1 变白，与白色滑块
+   （--vp-c-neutral-inverse）融为一体。滑块恒为白底，图标固定用
+   --vp-c-neutral（浅色模式即黑，与主题默认同值；深色模式不再跟随变白） */
+html.home-over-video .VPNavAppearance .icon [class^='vpi-'] {
+  color: var(--vp-c-neutral);
+}

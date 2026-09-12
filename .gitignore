@@ -1,0 +1,7 @@
+node_modules
+.vitepress/cache
+.vitepress/dist
+example/
+.qwen/
+ffmpeg2pass-0.log
+ffmpeg2pass-0.log.mbtree
