@@ -98,7 +98,14 @@ onBeforeUnmount(() => {
             :class="`card--${a.category}`"
           >
             <div v-if="a.cover" class="card__cover">
-              <img :src="a.cover" :alt="a.title" loading="lazy" @error="onCoverError(a)" />
+              <!-- no-referrer：bilibili 等图床按 Referer 防盗链（非 b 站来源 403），不发送 Referer 即可正常加载 -->
+              <img
+                :src="a.cover"
+                :alt="a.title"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                @error="onCoverError(a)"
+              />
             </div>
             <div class="card__body">
               <span class="card__badge">{{ CATEGORY_LABELS[a.category] ?? a.category }}</span>

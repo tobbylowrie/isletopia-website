@@ -66,6 +66,8 @@ function extractCover(body: string, dir: string): string | null {
   const src = m[1]
   // 绝对路径 / 外链 / public 路径直接可用，相对路径挂到文章所在目录
   if (/^(https?:)?\/\//.test(src) || src.startsWith('/')) return src
+  // 无协议的域名链接（www.xxx.com/...）补 https
+  if (/^[a-z0-9-]+(\.[a-z0-9-]+)+\//i.test(src)) return `https://${src}`
   return `/${dir}/${src}`
 }
 
