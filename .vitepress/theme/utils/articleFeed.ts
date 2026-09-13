@@ -19,7 +19,8 @@ export const CATEGORY_LABELS: Record<string, string> = {
   news: '新闻',
   blogs: '博客',
   events: '活动',
-  changelog: '更新日志'
+  changelog: '更新日志',
+  notices: '公告'
 }
 
 const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---[ \t]*\r?\n?/

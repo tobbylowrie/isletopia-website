@@ -87,6 +87,10 @@ function formatDate(date: string) {
   --cat-1: #64748b;
   --cat-soft: rgba(100, 116, 139, 0.14);
 }
+.card--notices {
+  --cat-1: #dc2626;
+  --cat-soft: rgba(220, 38, 38, 0.12);
+}
 
 .dark .card--news {
   --cat-1: #a8b1ff;
@@ -103,6 +107,10 @@ function formatDate(date: string) {
 .dark .card--changelog {
   --cat-1: #94a3b8;
   --cat-soft: rgba(148, 163, 184, 0.18);
+}
+.dark .card--notices {
+  --cat-1: #f87171;
+  --cat-soft: rgba(248, 113, 113, 0.16);
 }
 
 .card {
