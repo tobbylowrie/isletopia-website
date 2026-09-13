@@ -40,7 +40,7 @@ function formatDate(date: string) {
       <p class="card__meta">
         <span class="card__badge">{{ CATEGORY_LABELS[article.category] ?? article.category }}</span>
         <span>
-          <template v-if="article.author">{{ article.author }} · </template>{{ formatDate(article.date) }}
+          {{ formatDate(article.date) }}<template v-if="article.author"> · {{ article.author }}</template>
         </span>
       </p>
       <p class="card__summary">{{ article.description }}</p>
