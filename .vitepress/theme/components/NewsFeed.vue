@@ -46,7 +46,8 @@ function onCoverError(article: Article) {
 }
 
 function syncColumns() {
-  colCount.value = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1
+  colCount.value =
+    window.innerWidth >= 1280 ? 4 : window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1
 }
 
 function formatDate(date: string) {
@@ -108,10 +109,12 @@ onBeforeUnmount(() => {
               />
             </div>
             <div class="card__body">
-              <span class="card__badge">{{ CATEGORY_LABELS[a.category] ?? a.category }}</span>
               <h3 class="card__title">{{ a.title }}</h3>
               <p class="card__meta">
-                <template v-if="a.author">{{ a.author }} · </template>{{ formatDate(a.date) }}
+                <span class="card__badge">{{ CATEGORY_LABELS[a.category] ?? a.category }}</span>
+                <span>
+                  <template v-if="a.author">{{ a.author }} · </template>{{ formatDate(a.date) }}
+                </span>
               </p>
               <p class="card__summary">{{ a.description }}</p>
             </div>
@@ -219,6 +222,7 @@ onBeforeUnmount(() => {
 
 .card__badge {
   display: inline-block;
+  flex-shrink: 0;
   padding: 0.125rem 0.625rem;
   border-radius: 999px;
   font-size: 0.75rem;
@@ -229,7 +233,7 @@ onBeforeUnmount(() => {
 }
 
 .card__title {
-  margin: 0.625rem 0 0.375rem;
+  margin: 0 0 0.5rem;
   font-size: 1.0625rem;
   font-weight: 600;
   line-height: 1.45;
@@ -241,6 +245,9 @@ onBeforeUnmount(() => {
 }
 
 .card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
   margin: 0 0 0.5rem;
   font-size: 0.8125rem;
   color: var(--vp-c-text-3);
