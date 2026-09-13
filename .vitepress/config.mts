@@ -1,4 +1,42 @@
 import { defineConfig } from 'vitepress'
+import { execSync } from 'node:child_process'
+import { fileURLToPath } from 'node:url'
+import path from 'node:path'
+
+// 「动态」页聚合的文章目录（须与 NewsFeed.vue 的 glob 保持一致）
+const FEED_DIRS = ['news', 'blogs', 'events', 'changelog', 'notices']
+
+// —— 文章「最后修改时间」：取自 md 文件的 git 最后提交时间，无需手工维护 frontmatter ——
+const repoRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)))
+
+// 「docs/<文章相对路径> -> 最后提交时间戳(秒)」映射，每次构建/开发会话只计算一次
+let feedLastUpdatedMap: Map<string, number> | null = null
+
+function getFeedLastUpdatedMap(): Map<string, number> {
+  if (feedLastUpdatedMap) return feedLastUpdatedMap
+  const map = new Map<string, number>()
+  try {
+    // git log 按时间倒序输出，每个文件取第一个触及它的提交即最后修改时间
+    // -c core.quotepath=false：保证中文文件名按 UTF-8 输出而非八进制转义
+    const output = execSync(
+      `git -c core.quotepath=false log --format=@@@%ct --name-only -- ${FEED_DIRS.map((d) => `docs/${d}`).join(' ')}`,
+      { cwd: repoRoot, encoding: 'utf8' }
+    )
+    let ts = 0
+    for (const raw of output.split(/\r?\n/)) {
+      const line = raw.trim()
+      if (line.startsWith('@@@')) {
+        ts = Number(line.slice(3))
+      } else if (line && ts && !map.has(line)) {
+        map.set(line, ts)
+      }
+    }
+  } catch {
+    // 非 git 仓库或命令失败：视为无最后修改时间，组件会回退显示发布时间
+  }
+  feedLastUpdatedMap = map
+  return map
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -14,6 +52,23 @@ export default defineConfig({
       `(function(){if(location.pathname==='/'||/\\/index\\.html(\\?|#|$)/.test(location.pathname))document.documentElement.classList.add('home-over-video')})()`
     ]
   ],
+  transformPageData(pageData) {
+    // 为「动态」文章注入 git 最后提交时间（frontmatter.lastUpdated），供 ArticleMeta 显示「最后修改时间」
+    const fp = pageData.filePath
+    if (fp && FEED_DIRS.some((d) => fp.startsWith(`docs/${d}/`))) {
+      const ts = getFeedLastUpdatedMap().get(fp)
+      if (ts) {
+        const d = new Date(ts * 1000)
+        return {
+          frontmatter: {
+            ...pageData.frontmatter,
+            lastUpdated: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+          }
+        }
+      }
+    }
+    return pageData
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/logo.png',
