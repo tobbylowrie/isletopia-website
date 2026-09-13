@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
-import {
-  buildArticles,
-  CATEGORY_LABELS,
-  type Article
-} from '../utils/articleFeed'
+import { buildArticles, type Article } from '../utils/articleFeed'
+import FeedCard from './FeedCard.vue'
 
 // 单批渲染的卡片数量（上限由 MAX_BATCH_SIZE 钳制，下滑触底自动加载下一批）
 const BATCH_SIZE = 12
@@ -17,10 +14,23 @@ const rawModules = import.meta.glob('/docs/{news,blogs,events,changelog}/**/*.md
   import: 'default'
 })
 
+// 布局模式：4 列 / 2 列 / 单列时间轴；选择持久化到 localStorage
+type LayoutMode = 'cols4' | 'cols2' | 'timeline'
+const LAYOUT_STORAGE_KEY = 'news-feed-layout'
+
+const VIEW_OPTIONS: { id: LayoutMode; label: string }[] = [
+  { id: 'cols4', label: '紧凑' },
+  { id: 'cols2', label: '宽松' },
+  { id: 'timeline', label: '时间轴' }
+]
+// 各模式期望列数；小屏按断点向下收缩，避免过挤
+const PREFERRED_COLS: Record<LayoutMode, number> = { cols4: 4, cols2: 2, timeline: 1 }
+
 const articles = ref<Article[]>([])
 const loading = ref(true)
 const visibleCount = ref(PER_BATCH)
-const colCount = ref(3)
+const colCount = ref(PREFERRED_COLS.cols2)
+const layoutMode = ref<LayoutMode>('cols2')
 const sentinel = ref<HTMLElement | null>(null)
 let observer: IntersectionObserver | null = null
 
@@ -35,26 +45,54 @@ const columns = computed(() => {
   return cols
 })
 
+// 时间轴视图：按「年-月」分组（文章已按日期从新到旧排序）
+interface MonthGroup {
+  key: string
+  label: string
+  items: Article[]
+}
+const timelineGroups = computed<MonthGroup[]>(() => {
+  const groups: MonthGroup[] = []
+  let current: MonthGroup | null = null
+  for (const a of articles.value.slice(0, visibleCount.value)) {
+    const key = /^\d{4}-\d{2}-/.test(a.date) ? a.date.slice(0, 7) : 'undated'
+    if (!current || current.key !== key) {
+      current = {
+        key,
+        label: key === 'undated' ? '未标注日期' : `${key.slice(0, 4)}年${Number(key.slice(5))}月`,
+        items: []
+      }
+      groups.push(current)
+    }
+    current.items.push(a)
+  }
+  return groups
+})
+
+function applyLayout(mode: LayoutMode) {
+  if (layoutMode.value === mode) return
+  layoutMode.value = mode
+  localStorage.setItem(LAYOUT_STORAGE_KEY, mode)
+  syncColumns()
+}
+
 function loadMore() {
   if (hasMore.value) {
     visibleCount.value = Math.min(visibleCount.value + PER_BATCH, articles.value.length)
   }
 }
 
-function onCoverError(article: Article) {
-  article.cover = null
-}
-
 function syncColumns() {
-  colCount.value =
+  const max =
     window.innerWidth >= 1280 ? 4 : window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1
-}
-
-function formatDate(date: string) {
-  return date.replaceAll('-', '.')
+  colCount.value = Math.min(PREFERRED_COLS[layoutMode.value], max)
 }
 
 onMounted(async () => {
+  const saved = localStorage.getItem(LAYOUT_STORAGE_KEY)
+  if (saved === 'cols4' || saved === 'cols2' || saved === 'timeline') {
+    layoutMode.value = saved
+  }
   syncColumns()
   window.addEventListener('resize', syncColumns)
 
@@ -82,43 +120,79 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="news-feed">
+  <div class="news-feed" :class="{ 'news-feed--narrow': layoutMode !== 'cols4' }">
+    <!-- 页面顶部的视图切换器 -->
+    <div class="news-feed__switcher" role="group" aria-label="切换布局视图">
+      <button
+        v-for="v in VIEW_OPTIONS"
+        :key="v.id"
+        type="button"
+        class="news-feed__switch-btn"
+        :class="{ 'is-active': layoutMode === v.id }"
+        :title="v.label"
+        :aria-label="v.label"
+        :aria-pressed="layoutMode === v.id"
+        @click="applyLayout(v.id)"
+      >
+        <svg
+          v-if="v.id === 'cols4'"
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <rect x="1" y="2.5" width="2.4" height="11" rx="0.8" />
+          <rect x="4.8" y="2.5" width="2.4" height="11" rx="0.8" />
+          <rect x="8.6" y="2.5" width="2.4" height="11" rx="0.8" />
+          <rect x="12.4" y="2.5" width="2.4" height="11" rx="0.8" />
+        </svg>
+        <svg
+          v-else-if="v.id === 'cols2'"
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <rect x="1.8" y="2.5" width="5" height="11" rx="1" />
+          <rect x="9.2" y="2.5" width="5" height="11" rx="1" />
+        </svg>
+        <svg v-else viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path d="M3.5 2.5v11" stroke="currentColor" stroke-width="1.6" fill="none" />
+          <circle cx="3.5" cy="4" r="1.5" fill="currentColor" />
+          <circle cx="3.5" cy="8" r="1.5" fill="currentColor" />
+          <circle cx="3.5" cy="12" r="1.5" fill="currentColor" />
+          <rect x="7" y="3.2" width="7.2" height="1.8" rx="0.9" fill="currentColor" />
+          <rect x="7" y="7.2" width="7.2" height="1.8" rx="0.9" fill="currentColor" />
+          <rect x="7" y="11.2" width="7.2" height="1.8" rx="0.9" fill="currentColor" />
+        </svg>
+        <span>{{ v.label }}</span>
+      </button>
+    </div>
+
     <p v-if="loading" class="news-feed__status">正在加载文章…</p>
 
     <template v-else>
+      <div v-if="layoutMode === 'timeline'" class="news-feed__timeline">
+        <div v-for="g in timelineGroups" :key="g.key" class="tl-group">
+          <div class="tl-group__head">
+            <span class="tl-group__dot"></span>
+            <h2 class="tl-group__label">{{ g.label }}</h2>
+          </div>
+          <div class="tl-group__cards">
+            <FeedCard v-for="a in g.items" :key="a.href" :article="a" variant="timeline" />
+          </div>
+        </div>
+      </div>
+
       <div
+        v-else
         class="news-feed__waterfall"
         :style="{ gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))` }"
       >
         <div v-for="(col, ci) in columns" :key="ci" class="news-feed__column">
-          <a
-            v-for="a in col"
-            :key="a.href"
-            :href="a.href"
-            class="card"
-            :class="`card--${a.category}`"
-          >
-            <div v-if="a.cover" class="card__cover">
-              <!-- no-referrer：bilibili 等图床按 Referer 防盗链（非 b 站来源 403），不发送 Referer 即可正常加载 -->
-              <img
-                :src="a.cover"
-                :alt="a.title"
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                @error="onCoverError(a)"
-              />
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">{{ a.title }}</h3>
-              <p class="card__meta">
-                <span class="card__badge">{{ CATEGORY_LABELS[a.category] ?? a.category }}</span>
-                <span>
-                  <template v-if="a.author">{{ a.author }} · </template>{{ formatDate(a.date) }}
-                </span>
-              </p>
-              <p class="card__summary">{{ a.description }}</p>
-            </div>
-          </a>
+          <FeedCard v-for="a in col" :key="a.href" :article="a" />
         </div>
       </div>
 
@@ -133,6 +207,11 @@ onBeforeUnmount(() => {
   max-width: var(--vp-layout-max-width);
   margin: 0 auto;
   padding: 1.5rem 1.5rem 4rem;
+}
+
+/* 双列 / 时间轴视图共用窄宽 */
+.news-feed--narrow {
+  max-width: 48rem;
 }
 
 .news-feed__waterfall {
@@ -154,113 +233,90 @@ onBeforeUnmount(() => {
   color: var(--vp-c-text-3);
 }
 
-/* 分类配色（明暗主题唯一调整处） */
-.card {
-  --cat-1: var(--vp-c-text-2);
-  --cat-soft: var(--vp-c-bg-soft);
-}
-.card--news {
-  --cat-1: #5c73e7;
-  --cat-soft: rgba(92, 115, 231, 0.12);
-}
-.card--blogs {
-  --cat-1: #16a34a;
-  --cat-soft: rgba(22, 163, 74, 0.12);
-}
-.card--events {
-  --cat-1: #ea580c;
-  --cat-soft: rgba(234, 88, 12, 0.12);
-}
-.card--changelog {
-  --cat-1: #64748b;
-  --cat-soft: rgba(100, 116, 139, 0.14);
+.tl-group {
+  position: relative;
+  padding-left: 1.75rem;
+  padding-bottom: 1.75rem;
 }
 
-.dark .card--news {
-  --cat-1: #a8b1ff;
-  --cat-soft: rgba(168, 177, 255, 0.16);
+/* 竖向时间轴：精确衔接圆点——从本组圆点底边（18px）到下一组圆点顶边（下探 6px） */
+.tl-group::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1.125rem;
+  bottom: -0.375rem;
+  width: 1px;
+  background: var(--vp-c-divider);
 }
-.dark .card--blogs {
-  --cat-1: #4ade80;
-  --cat-soft: rgba(74, 222, 128, 0.16);
-}
-.dark .card--events {
-  --cat-1: #fb923c;
-  --cat-soft: rgba(251, 146, 60, 0.16);
-}
-.dark .card--changelog {
-  --cat-1: #94a3b8;
-  --cat-soft: rgba(148, 163, 184, 0.18);
+.tl-group:last-child::before {
+  display: none;
 }
 
-.card {
-  display: block;
-  overflow: hidden;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 0.75rem;
-  background-color: var(--vp-c-bg);
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-.card:hover {
-  border-color: var(--cat-1);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+.tl-group__head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 0 0.875rem;
 }
 
-.card__cover {
-  line-height: 0;
-}
-.card__cover img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.card__body {
-  padding: 0.875rem 1rem 1rem;
+.tl-group__dot {
+  position: absolute;
+  left: -1.75rem;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 3px var(--vp-c-bg);
 }
 
-.card__badge {
-  display: inline-block;
-  flex-shrink: 0;
-  padding: 0.125rem 0.625rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
+.tl-group__label {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
   line-height: 1.5;
-  color: var(--cat-1);
-  background-color: var(--cat-soft);
-}
-
-.card__title {
-  margin: 0 0 0.5rem;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  line-height: 1.45;
   color: var(--vp-c-text-1);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
-.card__meta {
+.tl-group__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 页面顶部的视图切换器（分段控件样式） */
+.news-feed__switcher {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin: 0 0 1.5rem;
+  padding: 0.25rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 0.625rem;
+  background-color: var(--vp-c-bg-soft);
+}
+
+.news-feed__switch-btn {
   display: flex;
   align-items: center;
   gap: 0.375rem;
-  margin: 0 0 0.5rem;
-  font-size: 0.8125rem;
-  color: var(--vp-c-text-3);
-}
-
-.card__summary {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.65;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  background-color: transparent;
   color: var(--vp-c-text-2);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.news-feed__switch-btn:hover {
+  color: var(--vp-c-text-1);
+}
+.news-feed__switch-btn.is-active {
+  background-color: var(--vp-c-bg);
+  color: var(--vp-c-brand-1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 </style>

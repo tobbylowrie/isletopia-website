@@ -11,6 +11,8 @@ export interface Article {
   category: string
   description: string
   cover: string | null
+  /** 时间轴视图图片宫格：正文 ![] 图按序收集（无则回退头图约定行），去重后最多 9 张 */
+  images: string[]
 }
 
 export const CATEGORY_LABELS: Record<string, string> = {
@@ -23,7 +25,7 @@ export const CATEGORY_LABELS: Record<string, string> = {
 const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---[ \t]*\r?\n?/
 const KV_RE = /^([A-Za-z0-9_-]+):[ \t]*(.*)$/
 const ITEM_RE = /^[ \t]+-[ \t]*(.+)$/
-const IMAGE_RE = /!\[[^\]]*\]\(([^)\s]+)[^)]*\)/
+const IMAGE_RE = /!\[[^\]]*\]\(([^)\s]+)[^)]*\)/g
 const COVER_LINK_RE = /(?:^|\n)[ \t]*\[头图\]\(([^)\s]+)[^)]*\)/
 
 export function parseFrontmatter(raw: string) {
@@ -60,15 +62,29 @@ function plainSummary(body: string): string {
   return text.length > 120 ? text.slice(0, 120) + '…' : text
 }
 
-function extractCover(body: string, dir: string): string | null {
-  const m = IMAGE_RE.exec(body) ?? COVER_LINK_RE.exec(body)
-  if (!m) return null
-  const src = m[1]
-  // 绝对路径 / 外链 / public 路径直接可用，相对路径挂到文章所在目录
-  if (/^(https?:)?\/\//.test(src) || src.startsWith('/')) return src
-  // 无协议的域名链接（www.xxx.com/...）补 https
-  if (/^[a-z0-9-]+(\.[a-z0-9-]+)+\//i.test(src)) return `https://${src}`
-  return `/${dir}/${src}`
+// 按正文顺序提取图片（去重、最多 9 张）；无 ![] 图时回退头图约定行。
+// 绝对路径 / 外链 / public 路径直接可用，相对路径挂到文章所在目录
+function extractImages(body: string, dir: string): string[] {
+  let srcs = [...body.matchAll(IMAGE_RE)].map((m) => m[1])
+  if (srcs.length === 0) {
+    const m = COVER_LINK_RE.exec(body)
+    if (m) srcs = [m[1]]
+  }
+  const images: string[] = []
+  for (const src of srcs) {
+    let url: string
+    if (/^(https?:)?\/\//.test(src) || src.startsWith('/')) {
+      url = src
+    } else if (/^[a-z0-9-]+(\.[a-z0-9-]+)+\//i.test(src)) {
+      // 无协议的域名链接（www.xxx.com/...）补 https
+      url = `https://${src}`
+    } else {
+      url = `/${dir}/${src}`
+    }
+    if (!images.includes(url)) images.push(url)
+    if (images.length >= 9) break
+  }
+  return images
 }
 
 const asList = (v: string | string[] | undefined): string[] =>
@@ -91,6 +107,7 @@ export function buildArticles(
       (typeof data.category === 'string' && data.category) ||
       dir.split('/')[1] ||
       'news'
+    const images = extractImages(body, dir)
     list.push({
       title: (typeof data.title === 'string' && data.title) || name,
       href: `/${path.replace(/\.md$/, '')}/`,
@@ -100,7 +117,8 @@ export function buildArticles(
       description:
         (typeof data.description === 'string' && data.description) ||
         plainSummary(body),
-      cover: extractCover(body, dir)
+      cover: images[0] ?? null,
+      images
     })
   }
   list.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
