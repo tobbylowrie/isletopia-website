@@ -24,7 +24,7 @@ export default {
   extends: DefaultTheme,
   // 本版（2.0 alpha）不会自动拾取 theme/Layout.vue，需显式覆盖
   Layout,
-  enhanceApp({ app }) {
+  enhanceApp({ app, router }) {
     // 全局注册，供 markdown（index.md）直接使用
     app.component('VideoBackground', VideoBackground)
     app.component('CopyIp', CopyIp)
@@ -67,5 +67,12 @@ export default {
     sync()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll, { passive: true })
+
+    // 路由切换时重同步：切页后路由在 nextTick 里 scrollTo(0,0)，若用户已在顶部
+    // 则无 scroll 事件，仅靠滚动监听无法补回首页的 home-over-video 类。
+    // rAF 等 Vue 提交新页面 DOM 后再 sync，保证读到新页的 .video-background。
+    router.onAfterRouteChange = () => {
+      requestAnimationFrame(sync)
+    }
   }
 } satisfies Theme
