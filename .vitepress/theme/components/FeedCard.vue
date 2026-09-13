@@ -118,7 +118,7 @@ function formatDate(date: string) {
   overflow: hidden;
   border: 1px solid var(--vp-c-divider);
   border-radius: 0.75rem;
-  background-color: var(--vp-c-bg);
+  background-color: var(--vp-c-bg-soft);
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .card:hover {
