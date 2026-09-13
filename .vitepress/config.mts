@@ -34,35 +34,19 @@ export default defineConfig({
     docFooter: { prev: false, next: false },
     nav: [
       { text: '首页', link: '/' },
+      {text: '新闻', link: '/docs/news'},
       {
-        text: '加入社区',
-        items: [
-          { text: 'QQ群', link: '/docs/join-us' },
-          // TODO: 替换为实际主页链接
-          { text: 'b站', link: 'https://space.bilibili.com/3546572702878559' },
-          { text: '抖音', link: 'https://v.douyin.com/6IAzNtm8BEU/' },
-          { text: '小红书', link: 'https://www.xiaohongshu.com/user/profile/67179c78000000001e001449' }
-        ]
-      },
-      {
-        text: '新闻中心',
-        items: [
-          { text: '通知公告', link: '/docs/news/notices' },
-          { text: '近期活动', link: '/docs/news/events' },
-          { text: '更新日志', link: '/docs/news/changelog' }
-        ]
-      },
-      {
-        text: '游玩指南&Wiki',
+        text: '游玩指南',
         items: [
           { text: '特色玩法', link: '/docs/guide/features' },
           { text: '新手教程', link: '/docs/guide/beginner' },
-          { text: 'Wiki', link: '/docs/wiki' },
-          { text: '规则', link: '/docs/rules' }
+          { text: '常见问题(FAQ)', link: '/docs/guide/faq' },
+          { text: 'Wiki', link: '/docs/guide/wiki' },
+          { text: '规则', link: '/docs/guide/rules' }
         ]
       },
       {
-        text: '资源中心',
+        text: '资源与下载',
         items: [
           { text: '岛屿存档下载', link: '/docs/resources/saves' },
           { text: '作品墙', link: '/docs/resources/works' },
