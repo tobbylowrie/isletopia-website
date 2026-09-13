@@ -34,7 +34,7 @@ export default defineConfig({
     docFooter: { prev: false, next: false },
     nav: [
       { text: '首页', link: '/' },
-      { text: '动态', link: '/news' },
+      { text: '最新动态', link: '/news' },
       {
         text: '游玩指南',
         items: [
