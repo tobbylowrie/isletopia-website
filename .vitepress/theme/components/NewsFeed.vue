@@ -104,6 +104,32 @@ onMounted(async () => {
   articles.value = buildArticles(entries)
   loading.value = false
   await nextTick()
+
+  // —— 返回本页时的滚动位置恢复 ——
+  // VitePress 路由切回本页的 nextTick 里会滚到 history.state.scrollPosition（点离页时写入），
+  // 但那时列表还没加载完，页面高度不足，scrollTo 被钳到顶部。列表渲染完成后在此补做：
+  // 先补足批次让目标位置在页面高度内，再滚动过去。
+  const restoreTo = (history.state as { scrollPosition?: unknown } | null)?.scrollPosition
+  if (typeof restoreTo === 'number' && restoreTo > 0) {
+    const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight
+    while (hasMore.value && maxScroll() < restoreTo) {
+      visibleCount.value = Math.min(visibleCount.value + PER_BATCH, articles.value.length)
+      await nextTick()
+    }
+    window.scrollTo(0, restoreTo)
+    // lazy 图片加载前高度为 0，滚动后视口附近的图片开始加载会把页面撑高，
+    // 等它们加载完再补滚一次，使落点贴近离开时的位置（上限 1.2s，不阻塞）
+    await Promise.race([
+      Promise.all(
+        Array.from(document.images)
+          .filter((img) => !img.complete)
+          .map((img) => img.decode().catch(() => undefined))
+      ),
+      new Promise((resolve) => setTimeout(resolve, 1200))
+    ])
+    if (window.scrollY < restoreTo) window.scrollTo(0, restoreTo)
+  }
+
   if (sentinel.value) {
     observer = new IntersectionObserver(
       (list) => list.some((e) => e.isIntersecting) && loadMore(),
