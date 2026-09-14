@@ -93,7 +93,7 @@ content:
 
   # 3. 活动公告
   - name: events
-    label: 活动公告
+    label: 活动
     type: collection
     path: events
     filename: "{primary}.md"
@@ -228,7 +228,7 @@ content:
 
   # 8. 媒体资源页（gallery / photos / replays / saves / works）
   - name: media-pages
-    label: 媒体资源页
+    label: 资源与下载
     type: collection
     path: media
     filename: "{primary}.md"
