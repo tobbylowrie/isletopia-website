@@ -1,7 +1,7 @@
 ---
 sidebar: false
+title: Cookie 政策
 ---
-
 # Cookie 政策
 
 > 最后更新：2026年9月12日
@@ -42,3 +42,4 @@ Cookie 是网站访问过程中存储在您浏览器中的小型文本文件，�
 - [免责声明](/docs/legal/disclaimer)
 - [版权声明](/docs/legal/copyright)
 - [隐私政策](/docs/legal/privacy-policy)
+
