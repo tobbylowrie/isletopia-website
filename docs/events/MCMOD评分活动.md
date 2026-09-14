@@ -33,11 +33,11 @@ layout: doc
 
 （注意：需要在评分区评分后才算正式参与活动，不要将下方的评论和评分混淆哟）
 
-![1184bb2559c1d810c79c6189cc2df5cc.webp](https://txc.gtimg.com/data/414594/2024/0916/1184bb2559c1d810c79c6189cc2df5cc.webp)
+![1184bb2559c1d810c79c6189cc2df5cc.webp](/images/1184bb2559c1d810c79c6189cc2df5cc.webp)
 
 常见的错误格式（只在评论区评论，没有评分，也没有发送mcmodID）：
 
-![8599725b425648a2af3a5d7c3e4bba94.webp](https://txc.gtimg.com/data/414594/2024/0925/8599725b425648a2af3a5d7c3e4bba94.webp)
+![8599725b425648a2af3a5d7c3e4bba94.webp](/images/8599725b425648a2af3a5d7c3e4bba94.webp)
 
 **2、累计评分额外赠送海洋之心活动。**
 
@@ -47,16 +47,16 @@ layout: doc
 
 在统计评分过程中，部分玩家mcmod与游戏id无法对应，以下为名单。如果有你，请联系管理员**MiaoMiao777**认领，认领后玩家位置将排在已有顺序之后。
 
-![deeed91d39afe8da78b0a0cbec2abfd5.webp](https://txc.gtimg.com/data/414594/2024/1009/deeed91d39afe8da78b0a0cbec2abfd5.webp)
+![deeed91d39afe8da78b0a0cbec2abfd5.webp](/images/deeed91d39afe8da78b0a0cbec2abfd5.webp)
 
 **2）评分人数满100人无法发放的玩家ID认领**
 
 在**100人评分额外海洋之心**发放过程中，部分玩家由于修改游戏ID导致海洋之心发放失败，以下为名单。如果有你请带着**mcmodID截图或者其他有效证据**联系管理员**MiaoMiao777**认领。
 
-![90eab940ad6ea6a70a96e7272f7454ea.webp](https://txc.gtimg.com/data/414594/2024/1009/90eab940ad6ea6a70a96e7272f7454ea.webp)
+![90eab940ad6ea6a70a96e7272f7454ea.webp](/images/90eab940ad6ea6a70a96e7272f7454ea.webp)
 
 3）**评分人数满200人无法发放的玩家ID认领**
 
 在**100人评分额外海洋之心**发放过程中，部分玩家由于修改游戏ID导致海洋之心发放失败，以下为名单。如果有你请带着**mcmodID截图或者其他有效证据**联系管理员**MiaoMiao777**认领。
 
-![345a616fc28c45f8e697c82f6e525f95.webp](https://txc.gtimg.com/data/414594/2025/0216/345a616fc28c45f8e697c82f6e525f95.webp)
+![345a616fc28c45f8e697c82f6e525f95.webp](/images/345a616fc28c45f8e697c82f6e525f95.webp)

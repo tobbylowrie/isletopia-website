@@ -29,8 +29,8 @@ layout: doc
 
 - 如果你不想给服务器点赞，可以领取奖励后取消点赞。
 
-![76b57964f612f447fa3c095387900388.png](https://txc.gtimg.com/data/414594/2024/0415/76b57964f612f447fa3c095387900388.png)
+![76b57964f612f447fa3c095387900388.png](/images/76b57964f612f447fa3c095387900388.png)
 
 点赞地址：[https://zh-cn.namemc.com/server/play.molean.com](https://txc.qq.com/products/414594/link-jump?jump=https%3A%2F%2Fzh-cn.namemc.com%2Fserver%2Fplay.molean.com)
 
-![9cb923155874073f401d1adb40e8d308.png](https://txc.gtimg.com/data/414594/2024/0415/9cb923155874073f401d1adb40e8d308.png)
+![9cb923155874073f401d1adb40e8d308.png](/images/9cb923155874073f401d1adb40e8d308.png)

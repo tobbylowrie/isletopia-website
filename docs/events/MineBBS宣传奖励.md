@@ -41,4 +41,4 @@ layout: doc
 
 2.必须设置头像、并在个人简介中填写自己的ID后才能领取奖励
 
-![2f8cd42ba338577fbe155de1e7d12007.png](https://txc.gtimg.com/data/414594/2024/0415/2f8cd42ba338577fbe155de1e7d12007.png)
+![2f8cd42ba338577fbe155de1e7d12007.png](/images/2f8cd42ba338577fbe155de1e7d12007.png)
