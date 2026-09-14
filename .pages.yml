@@ -247,28 +247,28 @@ content:
   # ===========================================================================
 
   # 9. 首页（根目录 index.md）
-  - name: home
-    label: 首页
-    type: file
-    path: index.md
-    format: yaml-frontmatter
-    fields:
-      - { name: layout, label: 布局, type: string, default: page, hidden: true }
-      - { name: sidebar, label: 显示侧边栏, type: boolean, default: false, hidden: true }
-      - { name: isHome, label: 是否为首页, type: boolean, default: true, hidden: true }
-      - { name: body, label: 正文, type: rich-text }
+  # - name: home
+  #   label: 首页
+  #   type: file
+  #   path: index.md
+  #   format: yaml-frontmatter
+  #   fields:
+  #     - { name: layout, label: 布局, type: string, default: page, hidden: true }
+  #     - { name: sidebar, label: 显示侧边栏, type: boolean, default: false, hidden: true }
+  #     - { name: isHome, label: 是否为首页, type: boolean, default: true, hidden: true }
+  #     - { name: body, label: 正文, type: rich-text }
 
   # 10. 动态聚合页（根目录 news.md）
-  - name: news-page
-    label: 动态聚合页
-    type: file
-    path: news.md
-    format: yaml-frontmatter
-    fields:
-      - { name: title, label: 标题, type: string }
-      - { name: description, label: 页面描述, type: text }
-      - { name: sidebar, label: 显示侧边栏, type: boolean, default: false, hidden: true }
-      - { name: body, label: 正文, type: rich-text }
+  # - name: news-page
+  #   label: 动态聚合页
+  #   type: file
+  #   path: news.md
+  #   format: yaml-frontmatter
+  #   fields:
+  #     - { name: title, label: 标题, type: string }
+  #     - { name: description, label: 页面描述, type: text }
+  #     - { name: sidebar, label: 显示侧边栏, type: boolean, default: false, hidden: true }
+  #     - { name: body, label: 正文, type: rich-text }
 
   # 11. 关于页面
   - name: about
