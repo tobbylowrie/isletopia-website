@@ -7,7 +7,7 @@
           梦幻之屿是已运营十年的
           Minecraft 老牌空岛生存服。从最初几座小小的空岛，到如今玩法成熟、社区活跃的云上家园，岛屿上的每一块矿、每一座建筑，都是玩家亲手打造。这里主打空岛生存的经典循环——扩建岛屿、发展科技、布置建筑、与岛友互动，辅以多年沉淀的稳定规则与插件体系。老玩家在这里有熟悉的伙伴，新玩家也能轻松找到属于自己的小岛。如果你想拥有一片云上的天地，欢迎登上梦幻之屿。
         </p>
-        <a class="home-intro__link" href="/docs/guide/features">
+        <a class="home-intro__link" href="/guide/features">
           查看特色玩法
           <span aria-hidden="true">→</span>
         </a>

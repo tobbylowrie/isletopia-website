@@ -97,13 +97,13 @@ const linkColumns = [relatedLinks.slice(0, 2), relatedLinks.slice(2)]
         Not an official Minecraft website. We are not associated with Mojang or Microsoft.
       </p>
       <p class="site-footer__line">
-        <a href="/docs/legal/disclaimer">免责声明</a>
+        <a href="/legal/disclaimer">免责声明</a>
         <span class="site-footer__divider">|</span>
-        <a href="/docs/legal/copyright">版权声明</a>
+        <a href="/legal/copyright">版权声明</a>
         <span class="site-footer__divider">|</span>
-        <a href="/docs/legal/cookie-policy">Cookie 政策</a>
+        <a href="/legal/cookie-policy">Cookie 政策</a>
         <span class="site-footer__divider">|</span>
-        <a href="/docs/legal/privacy-policy">隐私政策</a>
+        <a href="/legal/privacy-policy">隐私政策</a>
       </p>
       <p class="site-footer__version">VitePress v{{ vitepressVersion }}</p>
     </div>

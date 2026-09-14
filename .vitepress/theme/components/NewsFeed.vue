@@ -9,7 +9,7 @@ const MAX_BATCH_SIZE = 24
 const PER_BATCH = Math.min(BATCH_SIZE, MAX_BATCH_SIZE)
 
 // 文章目录 md 原文（?raw 由 Vite 直接读盘），运行时按需加载
-const rawModules = import.meta.glob('/docs/{news,blogs,events,changelog,notices}/**/*.md', {
+const rawModules = import.meta.glob('/{news,blogs,events,changelog,notices}/**/*.md', {
   query: '?raw',
   import: 'default'
 })

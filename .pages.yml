@@ -31,7 +31,7 @@ content:
   - name: news
     label: 新闻
     type: collection
-    path: docs/news
+    path: news
     filename: "{primary}.md"
     format: yaml-frontmatter
     view:
@@ -63,7 +63,7 @@ content:
   - name: blogs
     label: 博客
     type: collection
-    path: docs/blogs
+    path: blogs
     filename: "{primary}.md"
     format: yaml-frontmatter
     view:
@@ -95,7 +95,7 @@ content:
   - name: events
     label: 活动公告
     type: collection
-    path: docs/events
+    path: events
     filename: "{primary}.md"
     format: yaml-frontmatter
     view:
@@ -127,7 +127,7 @@ content:
   - name: changelog
     label: 更新日志
     type: collection
-    path: docs/changelog
+    path: changelog
     filename:
       template: "{year}-{month}-{day}.md"
       field: create
@@ -161,7 +161,7 @@ content:
   - name: notices
     label: 公告
     type: collection
-    path: docs/notices
+    path: notices
     filename: "{primary}.md"
     format: yaml-frontmatter
     view:
@@ -197,7 +197,7 @@ content:
   - name: guide
     label: 游玩指南
     type: collection
-    path: docs/guide
+    path: guide
     subfolders: true
     filename: "{primary}.md"
     format: yaml-frontmatter
@@ -214,7 +214,7 @@ content:
   - name: legal
     label: 法律文档
     type: collection
-    path: docs/legal
+    path: legal
     filename: "{primary}.md"
     format: yaml-frontmatter
     view:
@@ -230,7 +230,7 @@ content:
   - name: media-pages
     label: 媒体资源页
     type: collection
-    path: docs/media
+    path: media
     filename: "{primary}.md"
     format: yaml-frontmatter
     view:
@@ -274,7 +274,7 @@ content:
   - name: about
     label: 关于页面
     type: file
-    path: docs/about.md
+    path: about.md
     format: yaml-frontmatter
     fields:
       - { name: title, label: 标题, type: string }
@@ -286,7 +286,7 @@ content:
   - name: join-us
     label: 加入服务器
     type: file
-    path: docs/join-us.md
+    path: join-us.md
     format: yaml-frontmatter
     fields:
       - { name: title, label: 标题, type: string }

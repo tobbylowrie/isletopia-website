@@ -9,7 +9,7 @@ const FEED_DIRS = ['news', 'blogs', 'events', 'changelog', 'notices']
 // —— 文章「最后修改时间」：取自 md 文件的 git 最后提交时间，无需手工维护 frontmatter ——
 const repoRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)))
 
-// 「docs/<文章相对路径> -> 最后提交时间戳(秒)」映射，每次构建/开发会话只计算一次
+// 「<文章相对路径> -> 最后提交时间戳(秒)」映射，每次构建/开发会话只计算一次
 let feedLastUpdatedMap: Map<string, number> | null = null
 
 function getFeedLastUpdatedMap(): Map<string, number> {
@@ -19,7 +19,7 @@ function getFeedLastUpdatedMap(): Map<string, number> {
     // git log 按时间倒序输出，每个文件取第一个触及它的提交即最后修改时间
     // -c core.quotepath=false：保证中文文件名按 UTF-8 输出而非八进制转义
     const output = execSync(
-      `git -c core.quotepath=false log --format=@@@%ct --name-only -- ${FEED_DIRS.map((d) => `docs/${d}`).join(' ')}`,
+      `git -c core.quotepath=false log --format=@@@%ct --name-only -- ${FEED_DIRS.map((d) => `${d}`).join(' ')}`,
       { cwd: repoRoot, encoding: 'utf8' }
     )
     let ts = 0
@@ -55,7 +55,7 @@ export default defineConfig({
   transformPageData(pageData) {
     // 为「动态」文章注入 git 最后提交时间（frontmatter.lastUpdated），供 ArticleMeta 显示「最后修改时间」
     const fp = pageData.filePath
-    if (fp && FEED_DIRS.some((d) => fp.startsWith(`docs/${d}/`))) {
+    if (fp && FEED_DIRS.some((d) => fp.startsWith(`${d}/`))) {
       const ts = getFeedLastUpdatedMap().get(fp)
       if (ts) {
         const d = new Date(ts * 1000)
@@ -93,25 +93,25 @@ export default defineConfig({
       {
         text: '游玩指南',
         items: [
-          { text: '特色玩法', link: '/docs/guide/features' },
-          { text: '新手教程', link: '/docs/guide/beginner' },
-          { text: '常见问题(FAQ)', link: '/docs/guide/faq' },
-          { text: 'Wiki', link: '/docs/guide/wiki' },
-          { text: '规则', link: '/docs/guide/rules' }
+          { text: '特色玩法', link: '/guide/features' },
+          { text: '新手教程', link: '/guide/beginner' },
+          { text: '常见问题(FAQ)', link: '/guide/faq' },
+          { text: 'Wiki', link: '/guide/wiki' },
+          { text: '规则', link: '/guide/rules' }
         ]
       },
       {
         text: '资源与下载',
         items: [
-          { text: '岛屿存档下载', link: '/docs/resources/saves' },
-          { text: '作品墙', link: '/docs/resources/works' },
-          { text: '合影墙', link: '/docs/resources/photos' },
-          { text: '服务器图库', link: '/docs/resources/gallery' },
-          { text: '活动Replay回放', link: '/docs/resources/replays' }
+          { text: '岛屿存档下载', link: '/resources/saves' },
+          { text: '作品墙', link: '/resources/works' },
+          { text: '合影墙', link: '/resources/photos' },
+          { text: '服务器图库', link: '/resources/gallery' },
+          { text: '活动Replay回放', link: '/resources/replays' }
         ]
       },
       { text: '提交反馈', link: 'https://txc.qq.com/products/414594' },
-      { text: '关于', link: '/docs/about' }
+      { text: '关于', link: '/about' }
     ],
 
     sidebar: [

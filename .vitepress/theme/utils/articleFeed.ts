@@ -91,7 +91,7 @@ function extractImages(body: string, dir: string): string[] {
 const asList = (v: string | string[] | undefined): string[] =>
   Array.isArray(v) ? v : typeof v === 'string' && v !== '' ? [v] : []
 
-// entries: [globKey, rawText] 对，如 ['/docs/news/foo.md', '---\n...']
+// entries: [globKey, rawText] 对，如 ['/news/foo.md', '---\n...']
 export function buildArticles(
   entries: ReadonlyArray<readonly [string, string]>
 ): Article[] {

@@ -17,7 +17,7 @@ sidebar: false
 
 ## 二、Cookie
 
-本站自身不设置任何 Cookie，不使用追踪类 Cookie；第三方服务可能设置的 Cookie 详见[《Cookie 政策》](/docs/legal/cookie-policy)。
+本站自身不设置任何 Cookie，不使用追踪类 Cookie；第三方服务可能设置的 Cookie 详见[《Cookie 政策》](/legal/cookie-policy)。
 
 ## 三、第三方服务与数据出境
 
@@ -56,6 +56,6 @@ sidebar: false
 
 ## 相关文档
 
-- [免责声明](/docs/legal/disclaimer)
-- [版权声明](/docs/legal/copyright)
-- [Cookie 政策](/docs/legal/cookie-policy)
+- [免责声明](/legal/disclaimer)
+- [版权声明](/legal/copyright)
+- [Cookie 政策](/legal/cookie-policy)

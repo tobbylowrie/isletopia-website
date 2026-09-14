@@ -31,7 +31,7 @@ sidebar: false
 
 ## 四、版权
 
-- 除另有说明外，本站原创内容（文案、图片、网站主题与设计等）的著作权归梦幻之屿服务器团队所有。转载或引用请注明作者与来源链接，且不得用于商业用途。如无特别说明，本站原创文案与图片采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh) 协议授权（协议全文见 [https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)），详见[《版权声明》](/docs/legal/copyright)。
+- 除另有说明外，本站原创内容（文案、图片、网站主题与设计等）的著作权归梦幻之屿服务器团队所有。转载或引用请注明作者与来源链接，且不得用于商业用途。如无特别说明，本站原创文案与图片采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh) 协议授权（协议全文见 [https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)），详见[《版权声明》](/legal/copyright)。
 - 转载自第三方的内容，版权归原作者各自所有，来源已在文中注明；如标注有误或使用不当，请通过本声明第十条所述方式联系，经核实后予以删除或更正。
 
 ## 五、用户使用限制
@@ -48,8 +48,8 @@ sidebar: false
 ## 七、个人信息与 Cookie
 
 - 本站自身不提供账号注册或登录功能，不主动收集、存储访客的个人身份信息。
-- 为实现托管与安全防护，托管服务商以服务器日志形式记录必要的访问信息（如 IP 地址、访问时间），详见[《隐私政策》](/docs/legal/privacy-policy)。
-- 本站自身不设置任何追踪类 Cookie，详见[《Cookie 政策》](/docs/legal/cookie-policy)。
+- 为实现托管与安全防护，托管服务商以服务器日志形式记录必要的访问信息（如 IP 地址、访问时间），详见[《隐私政策》](/legal/privacy-policy)。
+- 本站自身不设置任何追踪类 Cookie，详见[《Cookie 政策》](/legal/cookie-policy)。
 - 如司法机关依照法定程序要求提供与本站内容或访问者相关的信息，本站将依法予以配合。
 
 ## 八、第三方服务条款与政策
@@ -97,6 +97,6 @@ sidebar: false
 
 ## 相关文档
 
-- [版权声明](/docs/legal/copyright)
-- [隐私政策](/docs/legal/privacy-policy)
-- [Cookie 政策](/docs/legal/cookie-policy)
+- [版权声明](/legal/copyright)
+- [隐私政策](/legal/privacy-policy)
+- [Cookie 政策](/legal/cookie-policy)

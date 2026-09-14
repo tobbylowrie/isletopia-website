@@ -45,6 +45,6 @@ sidebar: false
 
 ## 相关文档
 
-- [免责声明](/docs/legal/disclaimer)
-- [隐私政策](/docs/legal/privacy-policy)
-- [Cookie 政策](/docs/legal/cookie-policy)
+- [免责声明](/legal/disclaimer)
+- [隐私政策](/legal/privacy-policy)
+- [Cookie 政策](/legal/cookie-policy)

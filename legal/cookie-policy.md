@@ -16,7 +16,7 @@ Cookie 是网站访问过程中存储在您浏览器中的小型文本文件，�
 
 - 本站为非经营性宣传站点，不提供注册、登录或个性化功能。
 - **本站自身不设置任何 Cookie，不使用追踪类 Cookie，不进行跨站行为追踪。**
-- 访问本站产生的必要访问信息（如 IP 地址、访问时间）由托管与防护服务商以服务器日志形式记录，详见[《隐私政策》](/docs/legal/privacy-policy)。
+- 访问本站产生的必要访问信息（如 IP 地址、访问时间）由托管与防护服务商以服务器日志形式记录，详见[《隐私政策》](/legal/privacy-policy)。
 
 ## 三、第三方服务可能设置的 Cookie
 
@@ -26,7 +26,7 @@ Cookie 是网站访问过程中存储在您浏览器中的小型文本文件，�
 - **GitHub / GitHub Pages（网站托管）**：访问与使用 GitHub Pages 相关功能时，相关 Cookie 按 GitHub 政策设置。
 - **不蒜子（busuanzi，访问统计）**：本站页脚展示累计访问次数与访客数的聚合统计，该服务可能按其自身机制记录访问信息用于聚合统计。
 
-上述服务设置 Cookie 的具体用途与处理方式，以各服务提供方官方公布的隐私政策为准（链接见[《隐私政策》](/docs/legal/privacy-policy)第三条）。
+上述服务设置 Cookie 的具体用途与处理方式，以各服务提供方官方公布的隐私政策为准（链接见[《隐私政策》](/legal/privacy-policy)第三条）。
 
 ## 四、如何管理 Cookie
 
@@ -39,7 +39,7 @@ Cookie 是网站访问过程中存储在您浏览器中的小型文本文件，�
 
 ## 相关文档
 
-- [免责声明](/docs/legal/disclaimer)
-- [版权声明](/docs/legal/copyright)
-- [隐私政策](/docs/legal/privacy-policy)
+- [免责声明](/legal/disclaimer)
+- [版权声明](/legal/copyright)
+- [隐私政策](/legal/privacy-policy)
 

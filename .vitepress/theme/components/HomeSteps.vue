@@ -50,7 +50,7 @@ const clients = [
           <p class="home-steps__card-text">
             加入 QQ 群，获取最新活动通知、聊天交流、问题反馈。
           </p>
-          <a href="/docs/join-us" class="home-steps__cta">加入 QQ 群</a>
+          <a href="/join-us" class="home-steps__cta">加入 QQ 群</a>
         </li>
       </ol>
     </div>
