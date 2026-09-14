@@ -1,4 +1,4 @@
-// 「动态」页（/news/）文章数据的解析与过滤。
+// 「动态」页（/update/）文章数据的解析与过滤。
 // 输入为 md 原文（import.meta.glob ?raw），字段约定沿用统一模板 frontmatter：
 // title / date / hide / category / author / description，头图为正文首个
 // 图片 ![...](...) 或 [头图](...) 约定行。

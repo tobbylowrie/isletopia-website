@@ -24,7 +24,7 @@ content:
 
   # ===========================================================================
   # 一、Feed 类文章（5 类，共用同一套 frontmatter 模板）
-  # 这些目录的文章会被 NewsFeed.vue 聚合到 /news 动态页
+  # 这些目录的文章会被 NewsFeed.vue 聚合到 /update 动态页
   # ===========================================================================
 
   # 1. 新闻
@@ -258,11 +258,11 @@ content:
   #     - { name: isHome, label: 是否为首页, type: boolean, default: true, hidden: true }
   #     - { name: body, label: 正文, type: rich-text }
 
-  # 10. 动态聚合页（根目录 news.md）
-  # - name: news-page
+  # 10. 动态聚合页（根目录 update.md）
+  # - name: update-page
   #   label: 动态聚合页
   #   type: file
-  #   path: news.md
+  #   path: update.md
   #   format: yaml-frontmatter
   #   fields:
   #     - { name: title, label: 标题, type: string }
