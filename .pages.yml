@@ -93,7 +93,7 @@ content:
 
   # 3. 活动公告
   - name: events
-    label: 活动公告
+    label: 活动
     type: collection
     path: docs/events
     filename: "{primary}.md"
