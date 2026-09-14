@@ -228,7 +228,7 @@ content:
 
   # 8. 媒体资源页（gallery / photos / replays / saves / works）
   - name: media-pages
-    label: 媒体资源页
+    label: 资源与下载
     type: collection
     path: docs/media
     filename: "{primary}.md"
