@@ -1,4 +1,5 @@
 ---
+title: wiki
 sidebar: false
 ---
 

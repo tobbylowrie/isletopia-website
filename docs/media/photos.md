@@ -1,4 +1,5 @@
 ---
+title: 合影墙
 sidebar: false
 ---
 

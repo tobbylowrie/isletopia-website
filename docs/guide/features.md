@@ -1,4 +1,5 @@
 ---
+title: 特色玩法
 sidebar: false
 ---
 

@@ -1,4 +1,5 @@
 ---
+title: 梦幻之屿
 layout: page
 sidebar: false
 isHome: true

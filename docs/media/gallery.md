@@ -1,4 +1,5 @@
 ---
+title: 服务器图库
 sidebar: false
 ---
 

@@ -1,4 +1,5 @@
 ---
+title: 教程索引
 sidebar: false
 ---
 
