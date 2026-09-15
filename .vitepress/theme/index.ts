@@ -10,6 +10,7 @@ import HomeSteps from './components/HomeSteps.vue'
 import QqJoinButton from './components/QqJoinButton.vue'
 import SocialLinks from './components/SocialLinks.vue'
 import NewsFeed from './components/NewsFeed.vue'
+import HeroTagline from './components/HeroTagline.vue'
 // @ts-ignore -- 该包无类型声明
 import busuanzi from 'busuanzi.pure.js'
 import './style.css'
@@ -34,6 +35,7 @@ export default {
     app.component('QqJoinButton', QqJoinButton)
     app.component('SocialLinks', SocialLinks)
     app.component('NewsFeed', NewsFeed)
+    app.component('HeroTagline', HeroTagline)
     app.component('VPButton', VPButton)
 
     // 首页导航栏夜间配色只在覆盖全屏视频区域时生效：
