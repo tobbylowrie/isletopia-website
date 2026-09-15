@@ -4,10 +4,15 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 /**
  * 首页标语：3D 翻转 + 定时自动轮播
  *
- * 效果参考 Magic UI「Text 3D Flip」：每个字符是一个 3D 容器，内含正面 / 背面两层
- * （backface-visibility: hidden），容器绕 Y 轴旋转 90° 时正面消失、背面显现，
- * 配合逐字 stagger 延迟形成波浪式翻转。此处用纯 CSS 动画实现（无 motion 依赖），
- * 并通过定时切换文本列表实现自动轮播。
+ * 两层文本叠放在同一网格单元中，各自按自身内容分词排版并居中（长度不同也
+ * 互不挤动）：前层为当前标语，背层为下一条标语。每层始终处于自己的自然
+ * 布局，翻转过程中不会错位。
+ *
+ * 翻转是文本切换的过渡：前层字符逐个向上翻出（0° → 90° + 上移半字高），
+ * 背层字符从下方逐个翻入（边缘态 + 下移半字高 → 0°），逐字 stagger 形成
+ * 波浪。全部字符翻完后，同帧交换两层内容并移除动画类：旧背层（已在 0°
+ * 完整显示新文本）成为新前层，旧前层（已边缘态不可见）归位 0° 承载下条
+ * 文本，新文本在完全相同的位置交接，无可见跳变。
  *
  * 修改标语内容：直接编辑下方 TAGLINES 数组即可。
  */
@@ -26,117 +31,164 @@ const FLIP_DURATION = 0.45 // 单字翻转时长（s）
 const STAGGER = 0.035 // 逐字延迟间隔（s）
 
 const index = ref(0)
+const nextIndex = ref(1 % TAGLINES.length)
+const flipping = ref(false)
 const current = computed(() => TAGLINES[index.value])
+const nextText = computed(() => TAGLINES[nextIndex.value])
 
-// 按空格分词（词内不拆行），词内再按字符拆分
-const words = computed(() =>
-  current.value.split(' ').map((word) => ({
-    chars: Array.from(word),
-  }))
-)
-const lastWordIdx = computed(() => words.value.length - 1)
+// 各层按自身文本分词（词内不拆行）
+const toWords = (text: string) =>
+  text.split(' ').map((word) => Array.from(word))
+const frontWords = computed(() => toWords(current.value))
+const backWords = computed(() => toWords(nextText.value))
 
-// 逐字延迟：从左侧向右侧扩散（对应 Magic UI staggerFrom="first"）
-const charDelays = computed(() => {
+// 逐字延迟（不含空格）：从左侧向右侧扩散
+const toDelays = (text: string) => {
   let g = 0
-  return words.value.map((w) => w.chars.map(() => (g++) * STAGGER))
+  return text.split(' ').map((word) =>
+    Array.from(word).map(() => (g++) * STAGGER)
+  )
+}
+const frontDelays = computed(() => toDelays(current.value))
+const backDelays = computed(() => toDelays(nextText.value))
+
+const charCount = (text: string) =>
+  Array.from(text).filter((c) => c !== ' ').length
+
+// 两层中最慢一个字符翻完的总时长
+const flipTotalMs = () =>
+  Math.round(
+    (FLIP_DURATION +
+      (Math.max(charCount(current.value), charCount(nextText.value)) - 1) *
+        STAGGER) *
+      1000
+  )
+
+let timer: ReturnType<typeof setTimeout> | undefined
+let flipTimer: ReturnType<typeof setTimeout> | undefined
+
+function scheduleFlip() {
+  timer = setTimeout(flip, INTERVAL)
+}
+
+function flip() {
+  if (flipping.value) return
+  flipping.value = true
+  flipTimer = setTimeout(() => {
+    // 背层已在 0° 完整显示新文本、前层已边缘态不可见：
+    // 同帧交换两层内容并移除动画类，新文本位置不变，无可见跳变
+    index.value = nextIndex.value
+    nextIndex.value = (index.value + 1) % TAGLINES.length
+    flipping.value = false
+    scheduleFlip()
+  }, flipTotalMs())
+}
+
+onMounted(scheduleFlip)
+onUnmounted(() => {
+  if (timer !== undefined) clearTimeout(timer)
+  if (flipTimer !== undefined) clearTimeout(flipTimer)
 })
-
-let timer: ReturnType<typeof setInterval> | undefined
-
-function next() {
-  index.value = (index.value + 1) % TAGLINES.length
-}
-function start() {
-  stop()
-  timer = setInterval(next, INTERVAL)
-}
-function stop() {
-  if (timer !== undefined) {
-    clearInterval(timer)
-    timer = undefined
-  }
-}
-
-onMounted(start)
-onUnmounted(stop)
 </script>
 
 <template>
-  <!-- :key 变化时整棵字符树重建，CSS 动画随之重新触发 -->
   <p
     class="hero-tagline hero-tagline--flip"
-    :key="index"
+    :class="{ 'is-flipping': flipping }"
     :style="{ '--ht-flip-duration': FLIP_DURATION + 's' }"
     aria-live="polite"
   >
     <span class="ht-sr-only">{{ current }}</span>
-    <template v-for="(word, wi) in words" :key="wi">
-      <span class="ht-word">
-        <span
-          v-for="(ch, ci) in word.chars"
-          :key="ci"
-          class="ht-char"
-          :style="{ animationDelay: charDelays[wi][ci] + 's' }"
-        >
-          <span class="ht-face ht-face--front">{{ ch }}</span>
-          <span class="ht-face ht-face--back" aria-hidden="true">{{ ch }}</span>
+    <span class="ht-line ht-line--front">
+      <template v-for="(word, wi) in frontWords" :key="wi">
+        <span class="ht-word">
+          <span
+            v-for="(ch, ci) in word"
+            :key="ci"
+            class="ht-char"
+            :style="{ animationDelay: frontDelays[wi][ci] + 's' }"
+          >{{ ch }}</span>
         </span>
-      </span>
-      <!-- 词间空格（最后一个词后不加） -->
-      <span v-if="wi !== lastWordIdx" class="ht-space">&nbsp;</span>
-    </template>
+        <!-- 词间空格（最后一个词后不加） -->
+        <span v-if="wi !== frontWords.length - 1" class="ht-space">&nbsp;</span>
+      </template>
+    </span>
+    <span class="ht-line ht-line--back" aria-hidden="true">
+      <template v-for="(word, wi) in backWords" :key="wi">
+        <span class="ht-word">
+          <span
+            v-for="(ch, ci) in word"
+            :key="ci"
+            class="ht-char"
+            :style="{ animationDelay: backDelays[wi][ci] + 's' }"
+          >{{ ch }}</span>
+        </span>
+        <!-- 词间空格（最后一个词后不加） -->
+        <span v-if="wi !== backWords.length - 1" class="ht-space">&nbsp;</span>
+      </template>
+    </span>
   </p>
 </template>
 
 <style scoped>
-/* 覆盖全局 .hero-tagline 的 block 布局，改为 flex 以承载 3D 字符 */
+/* 覆盖全局 .hero-tagline 的 block 布局：单列 1fr 网格让两层共享同一单元
+   且占满整宽（列宽与文本长短无关，轮播时不会水平偏移） */
 .hero-tagline--flip {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  text-align: center;
+}
+
+.ht-line {
+  grid-area: 1 / 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: baseline;
-  perspective: 600px;
 }
 
 .ht-word {
   display: inline-flex;
 }
 
-/* 3D 容器：初始 translateZ(-0.5lh) 使正面位于 z=0 平面 */
+/* 单字 3D 容器 */
 .ht-char {
   display: inline-block;
-  position: relative;
-  height: 1lh;
-  transform-style: preserve-3d;
-  transform: translateZ(-0.5lh);
-  animation: ht-flip var(--ht-flip-duration, 0.45s) cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* 正面 / 背面：各占半层，背面预旋转 -90°（绕 X 轴），翻转后正立显现 */
-.ht-face {
-  display: inline-block;
-  height: 1lh;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-.ht-face--front {
-  transform: translateZ(0.5lh);
-}
-.ht-face--back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: rotateX(-90deg) translateZ(0.5lh);
+
+/* 背层静息在字符下方、呈边缘态（不可见），等待翻入 */
+.ht-line--back .ht-char {
+  transform: translateY(50%) rotateX(-90deg);
 }
 
-/* 翻转：绕 X 轴 0 → 90°（正面消失、背面显现），forwards 保持终态 */
-@keyframes ht-flip {
+/* 切换期间：前层字符向上翻出，背层字符自下翻入 */
+.is-flipping .ht-line--front .ht-char {
+  animation: ht-flip-out var(--ht-flip-duration, 0.45s) cubic-bezier(0.4, 0, 0.2, 1)
+    forwards;
+}
+.is-flipping .ht-line--back .ht-char {
+  animation: ht-flip-in var(--ht-flip-duration, 0.45s) cubic-bezier(0.4, 0, 0.2, 1)
+    forwards;
+}
+
+@keyframes ht-flip-out {
   from {
-    transform: translateZ(-0.5lh) rotateX(0deg);
+    transform: translateY(0) rotateX(0deg);
   }
   to {
-    transform: translateZ(-0.5lh) rotateX(90deg);
+    transform: translateY(-50%) rotateX(90deg);
+  }
+}
+
+@keyframes ht-flip-in {
+  from {
+    transform: translateY(50%) rotateX(-90deg);
+  }
+  to {
+    transform: translateY(0) rotateX(0deg);
   }
 }
 
