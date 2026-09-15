@@ -1,1 +1,1 @@
-The offical website of isletopia
+The official website of isletopia
