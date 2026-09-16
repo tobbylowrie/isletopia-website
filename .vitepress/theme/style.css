@@ -382,8 +382,9 @@ html.home-over-video .VPNav:has(.VPNavBar.home) .VPNavScreen {
   margin-right: 2rem;
 }
 
-/* 导航栏站点标题字号（主题默认 1rem） */
+/* 导航栏站点标题字号（主题默认 1rem），字体与首页主标题一致 */
 .VPNavBarTitle .title {
+  font-family: 'HeroTitle', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.25rem;
 }
 

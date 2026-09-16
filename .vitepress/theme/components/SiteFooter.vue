@@ -155,6 +155,8 @@ const linkColumns = [relatedLinks.slice(0, 2), relatedLinks.slice(2)]
 }
 
 .site-footer__title {
+  /* 字体与首页主标题 / 导航栏站点标题一致 */
+  font-family: 'HeroTitle', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--vp-c-text-1);
