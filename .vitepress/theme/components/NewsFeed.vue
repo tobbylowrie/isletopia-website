@@ -19,8 +19,8 @@ type LayoutMode = 'cols4' | 'cols2' | 'timeline'
 const LAYOUT_STORAGE_KEY = 'news-feed-layout'
 
 const VIEW_OPTIONS: { id: LayoutMode; label: string }[] = [
-  { id: 'cols4', label: '紧凑' },
-  { id: 'cols2', label: '宽松' },
+  { id: 'cols4', label: '等宽' },
+  { id: 'cols2', label: '双栏' },
   { id: 'timeline', label: '时间轴' }
 ]
 // 各模式期望列数；小屏按断点向下收缩，避免过挤
