@@ -92,14 +92,7 @@ onMounted(() => {
   align-items: center;
   text-align: center;
   color: #fff;
-  /* 顶部预留导航高度，所有宽度下导航都悬浮在视频上方 */
-  padding: calc(var(--vp-nav-height) + 1.5rem) 1.5rem 1.5rem;
+  padding: 1.5rem;
   box-sizing: border-box;
-}
-
-@media (min-width: 60rem) {
-  .video-background__content {
-    padding: calc(var(--vp-nav-height) + 1.5rem) 3rem;
-  }
 }
 </style>
