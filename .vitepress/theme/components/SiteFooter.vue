@@ -28,7 +28,7 @@ watch(() => route.path, refreshBusuanzi)
 
 // 已运行时长：从 SERVER_START 到今天，借位换算 年/月/日
 const uptime = computed(() => {
-  if (!SERVER_START) return 'XX 年 XX 月 XX 日'
+  if (!SERVER_START) return 'XX 年 XX 月 XX 天'
   const start = new Date(SERVER_START + 'T00:00:00')
   const now = new Date()
   let years = now.getFullYear() - start.getFullYear()
@@ -42,8 +42,8 @@ const uptime = computed(() => {
     years -= 1
     months += 12
   }
-  if (years < 0) return '0 年 0 月 0 日'
-  return `${years} 年 ${months} 月 ${days} 日`
+  if (years < 0) return '0 年 0 月 0 天'
+  return `${years} 年 ${months} 月 ${days} 天`
 })
 
 const relatedLinks = [

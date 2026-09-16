@@ -45,6 +45,10 @@ export default defineConfig({
   lang: 'zh-CN',
   head: [
     ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
+    // 正文字体：思源黑体（Noto Sans SC），走国内 CDN（Google Fonts 镜像）加速
+    ['link', { rel: 'preconnect', href: 'https://fonts.loli.net', crossorigin: '' }],
+    ['link', { rel: 'preconnect', href: 'https://gstatic.loli.net', crossorigin: '' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap' }],
     // 首页预渲染 HTML 尚无 home-over-video 类（浏览器 JS 才会补上），
     // 用内联脚本在首屏前加上，避免顶部闪现原版配色导航栏。
     // 注意：本版本 head 元组为 [tag, attrs, innerHTML]，脚本体是第三个元素

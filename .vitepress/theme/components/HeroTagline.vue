@@ -14,27 +14,32 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
  * 完整显示新文本）成为新前层，旧前层（已边缘态不可见）归位 0° 承载下条
  * 文本，新文本在完全相同的位置交接，无可见跳变。
  *
- * 修改标语内容：直接编辑下方 TAGLINES 数组即可。
+ * 修改标语内容：在使用处通过 taglines 属性传入即可。
  */
 
-// —— 标语列表（按顺序循环切换）——
-const TAGLINES = [
-  '千岛星河 · 筑梦之屿',
-  '十年不删档 · 空岛筑梦人',
-  '扩建岛屿 · 发展科技 · 云上家园',
-  '老玩家有伙伴 · 新玩家有归属',
-]
-
-// —— 可调参数 ——
-const INTERVAL = 3000 // 每条标语停留时长（ms）
-const FLIP_DURATION = 0.45 // 单字翻转时长（s）
-const STAGGER = 0.035 // 逐字延迟间隔（s）
+// —— 标语列表与时间参数均由使用处通过属性传入（带默认值）——
+const props = withDefaults(
+  defineProps<{
+    taglines: string[]
+    /** 每条标语停留时长（ms） */
+    interval?: number
+    /** 单字翻转时长（s） */
+    flipDuration?: number
+    /** 逐字延迟间隔（s） */
+    stagger?: number
+  }>(),
+  {
+    interval: 3000,
+    flipDuration: 0.45,
+    stagger: 0.035,
+  }
+)
 
 const index = ref(0)
-const nextIndex = ref(1 % TAGLINES.length)
+const nextIndex = ref(1 % props.taglines.length)
 const flipping = ref(false)
-const current = computed(() => TAGLINES[index.value])
-const nextText = computed(() => TAGLINES[nextIndex.value])
+const current = computed(() => props.taglines[index.value])
+const nextText = computed(() => props.taglines[nextIndex.value])
 
 // 各层按自身文本分词（词内不拆行）
 const toWords = (text: string) =>
@@ -46,7 +51,7 @@ const backWords = computed(() => toWords(nextText.value))
 const toDelays = (text: string) => {
   let g = 0
   return text.split(' ').map((word) =>
-    Array.from(word).map(() => (g++) * STAGGER)
+    Array.from(word).map(() => (g++) * props.stagger)
   )
 }
 const frontDelays = computed(() => toDelays(current.value))
@@ -58,9 +63,9 @@ const charCount = (text: string) =>
 // 两层中最慢一个字符翻完的总时长
 const flipTotalMs = () =>
   Math.round(
-    (FLIP_DURATION +
+    (props.flipDuration +
       (Math.max(charCount(current.value), charCount(nextText.value)) - 1) *
-        STAGGER) *
+        props.stagger) *
       1000
   )
 
@@ -68,7 +73,7 @@ let timer: ReturnType<typeof setTimeout> | undefined
 let flipTimer: ReturnType<typeof setTimeout> | undefined
 
 function scheduleFlip() {
-  timer = setTimeout(flip, INTERVAL)
+  timer = setTimeout(flip, props.interval)
 }
 
 function flip() {
@@ -78,7 +83,7 @@ function flip() {
     // 背层已在 0° 完整显示新文本、前层已边缘态不可见：
     // 同帧交换两层内容并移除动画类，新文本位置不变，无可见跳变
     index.value = nextIndex.value
-    nextIndex.value = (index.value + 1) % TAGLINES.length
+    nextIndex.value = (index.value + 1) % props.taglines.length
     flipping.value = false
     scheduleFlip()
   }, flipTotalMs())
@@ -95,7 +100,7 @@ onUnmounted(() => {
   <p
     class="hero-tagline hero-tagline--flip"
     :class="{ 'is-flipping': flipping }"
-    :style="{ '--ht-flip-duration': FLIP_DURATION + 's' }"
+    :style="{ '--ht-flip-duration': props.flipDuration + 's' }"
     aria-live="polite"
   >
     <span class="ht-sr-only">{{ current }}</span>

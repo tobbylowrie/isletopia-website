@@ -43,6 +43,41 @@
  *   in custom container, badges, etc.
  * -------------------------------------------------------------------------- */
 
+/**
+ * 自定义字体（本地自托管，文件位于 public/fonts/）
+ * - HeroTitle：仅用于首页大标题 .hero-title
+ * - WQYBitmapSong：仅用于首页副标题 .hero-tagline
+ *   注意：文泉驿位图宋是位图字体，仅 16px 原生清晰，
+ *   更大字号会放大发虚，故只用于 1.5rem 的副标题
+ * - Noto Sans SC（思源黑体）：正文字体（覆盖 --vp-font-family-base）
+ *   通过国内 CDN（fonts.loli.net，Google Fonts 镜像）加载，
+ *   <link> 引入见 .vitepress/config.mts 的 head 配置
+ * -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'HeroTitle';
+  src: url('/fonts/hero-title-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WQYBitmapSong';
+  src: url('/fonts/wqy-bitmap-song.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 正文字体：思源黑体（Noto Sans SC），由国内 CDN 提供（见 config.mts head） */
+:root {
+  --vp-font-family-base:
+    'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
 :root {
   --vp-c-default-1: var(--vp-c-gray-1);
   --vp-c-default-2: var(--vp-c-gray-2);
@@ -144,7 +179,7 @@
   width: fit-content;
   max-width: 24.5rem;
   line-height: 1.25;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   white-space: pre-wrap;
 }
@@ -152,27 +187,29 @@
 @media (min-width: 40rem) {
   .hero-title,
   .hero-text {
-    max-width: 36rem;
-    font-size: 3rem;
+    max-width: 40rem;
+    font-size: 3.75rem;
   }
 }
 
 @media (min-width: 60rem) {
   .hero-title,
   .hero-text {
-    font-size: 3.5rem;
+    font-size: 4.25rem;
   }
 }
 
 .hero-title {
+  font-family: 'HeroTitle', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #fff;
 }
 
 .hero-tagline {
   margin: 0.75rem 0 0;
-  max-width: 36rem;
+  max-width: 40rem;
   line-height: 1.5;
-  font-size: 1.25rem;
+  font-family: 'WQYBitmapSong', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.8);
 }
 

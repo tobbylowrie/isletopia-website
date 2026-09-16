@@ -7,8 +7,18 @@ isHome: true
 <!-- 第一屏 -->
 <VideoBackground>
   <img src="/logo.png" class="hero-logo" alt="梦幻之屿 logo" />
-  <h1 class="hero-title">梦幻之屿服务器群组</h1>
-  <HeroTagline />
+  <h1 class="hero-title">梦幻之屿空岛</h1>
+  <HeroTagline
+    :taglines="[
+      '千岛星河 · 筑梦之屿',
+      '十年不删档 · 空岛筑梦人',
+      '扩建岛屿 · 发展科技 · 云上家园',
+      '老玩家有伙伴 · 新玩家有归属',      
+    ]" 
+    :interval="4000"
+    :flip-duration="0.45"
+    :stagger="0.05"
+  />
   <p class="hero-actions">
     <VPButton theme="brand" text="加入QQ群" href="/join-us" />
     <CopyIp />
