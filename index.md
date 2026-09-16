@@ -7,7 +7,7 @@ isHome: true
 <!-- 第一屏 -->
 <VideoBackground>
   <img src="/logo.png" class="hero-logo" alt="梦幻之屿 logo" />
-  <h1 class="hero-title">梦幻之屿空岛</h1>
+  <h1 class="hero-title">梦幻之屿空岛服</h1>
   <HeroTagline
     :taglines="[
       '千岛星河 · 筑梦之屿',
@@ -20,7 +20,9 @@ isHome: true
     :stagger="0.05"
   />
   <p class="hero-actions">
-    <VPButton theme="brand" text="加入QQ群" href="/join-us" />
+    <QrTooltip>
+      <VPButton theme="brand" text="加入QQ群" href="/join-us" />
+    </QrTooltip>
     <CopyIp />
   </p>
   <SocialLinks />

@@ -8,6 +8,7 @@ import CopyIp from './components/CopyIp.vue'
 import HomeIntro from './components/HomeIntro.vue'
 import HomeSteps from './components/HomeSteps.vue'
 import QqJoinButton from './components/QqJoinButton.vue'
+import QrTooltip from './components/QrTooltip.vue'
 import SocialLinks from './components/SocialLinks.vue'
 import NewsFeed from './components/NewsFeed.vue'
 import HeroTagline from './components/HeroTagline.vue'
@@ -33,6 +34,7 @@ export default {
     app.component('HomeIntro', HomeIntro)
     app.component('HomeSteps', HomeSteps)
     app.component('QqJoinButton', QqJoinButton)
+    app.component('QrTooltip', QrTooltip)
     app.component('SocialLinks', SocialLinks)
     app.component('NewsFeed', NewsFeed)
     app.component('HeroTagline', HeroTagline)
