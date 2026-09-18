@@ -45,7 +45,7 @@ const features = [
 
       <p class="home-features__more">
         <a class="home-features__link" href="/guide/features">
-          查看特色玩法
+          查看全部特色玩法
           <span aria-hidden="true">→</span>
         </a>
       </p>
@@ -81,7 +81,7 @@ const features = [
 .home-features__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.25rem;
+  gap: 3rem;
 }
 
 @media (min-width: 60rem) {
