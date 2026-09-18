@@ -33,6 +33,8 @@ const colCount = ref(PREFERRED_COLS.cols2)
 const layoutMode = ref<LayoutMode>('cols2')
 const sentinel = ref<HTMLElement | null>(null)
 let observer: IntersectionObserver | null = null
+// 切页即卸载；恢复滚动是异步流程，卸载后须终止，否则会把新页面滚走
+let unmounted = false
 
 const hasMore = computed(() => visibleCount.value < articles.value.length)
 
@@ -109,13 +111,17 @@ onMounted(async () => {
   // VitePress 路由切回本页的 nextTick 里会滚到 history.state.scrollPosition（点离页时写入），
   // 但那时列表还没加载完，页面高度不足，scrollTo 被钳到顶部。列表渲染完成后在此补做：
   // 先补足批次让目标位置在页面高度内，再滚动过去。
+  // 流程是异步的：若等待期间用户已点进文章页（组件已卸载），立即终止，
+  // 否则收尾的 scrollTo 会把文章页滚到本页离开时的位置，导致文章不从顶部开始。
+  if (unmounted) return
   const restoreTo = (history.state as { scrollPosition?: unknown } | null)?.scrollPosition
   if (typeof restoreTo === 'number' && restoreTo > 0) {
     const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight
-    while (hasMore.value && maxScroll() < restoreTo) {
+    while (!unmounted && hasMore.value && maxScroll() < restoreTo) {
       visibleCount.value = Math.min(visibleCount.value + PER_BATCH, articles.value.length)
       await nextTick()
     }
+    if (unmounted) return
     window.scrollTo(0, restoreTo)
     // lazy 图片加载前高度为 0，滚动后视口附近的图片开始加载会把页面撑高，
     // 等它们加载完再补滚一次，使落点贴近离开时的位置（上限 1.2s，不阻塞）
@@ -127,7 +133,7 @@ onMounted(async () => {
       ),
       new Promise((resolve) => setTimeout(resolve, 1200))
     ])
-    if (window.scrollY < restoreTo) window.scrollTo(0, restoreTo)
+    if (!unmounted && window.scrollY < restoreTo) window.scrollTo(0, restoreTo)
   }
 
   if (sentinel.value) {
@@ -140,6 +146,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+  unmounted = true
   window.removeEventListener('resize', syncColumns)
   observer?.disconnect()
 })
@@ -237,7 +244,7 @@ onBeforeUnmount(() => {
 
 /* 双列 / 时间轴视图共用窄宽 */
 .news-feed--narrow {
-  max-width: 48rem;
+  max-width: 42rem;
 }
 
 .news-feed__waterfall {

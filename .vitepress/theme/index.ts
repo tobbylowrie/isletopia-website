@@ -52,7 +52,7 @@ export default {
     //   0    = 视频完全滚出视口顶部才切回原版（默认）
     //   > 0  = 提前切换，如 80 = 视频还剩 80px 可见时就切回
     //   < 0  = 推迟切换，如 -40 = 视频滚出顶部 40px 后才切回
-    const NIGHT_STYLE_THRESHOLD = 0
+    const NIGHT_STYLE_THRESHOLD = 80
 
     const root = document.documentElement
     let ticking = false
