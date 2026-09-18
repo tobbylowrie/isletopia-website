@@ -97,6 +97,7 @@ export default defineConfig({
       {
         text: '游玩指南',
         items: [
+          { text: '服务器简介', link: '/guide/intro' },
           { text: '特色玩法', link: '/guide/features' },
           { text: '新手教程', link: '/guide/beginner' },
           { text: '常见问题(FAQ)', link: '/guide/faq' },
