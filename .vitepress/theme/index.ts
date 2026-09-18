@@ -6,6 +6,7 @@ import Layout from './Layout.vue'
 import VideoBackground from './components/VideoBackground.vue'
 import CopyIp from './components/CopyIp.vue'
 import HomeIntro from './components/HomeIntro.vue'
+import HomeFeatures from './components/HomeFeatures.vue'
 import HomeSteps from './components/HomeSteps.vue'
 import ReviewWall from './components/ReviewWall.vue'
 import QqJoinButton from './components/QqJoinButton.vue'
@@ -33,6 +34,7 @@ export default {
     app.component('VideoBackground', VideoBackground)
     app.component('CopyIp', CopyIp)
     app.component('HomeIntro', HomeIntro)
+    app.component('HomeFeatures', HomeFeatures)
     app.component('HomeSteps', HomeSteps)
     app.component('ReviewWall', ReviewWall)
     app.component('QqJoinButton', QqJoinButton)

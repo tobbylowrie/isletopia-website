@@ -130,7 +130,7 @@ const rows = computed(() => {
   --review-marquee-duration: 1200s;
   position: relative;
   padding: 4rem 1.5rem 5rem;
-  background-color: var(--vp-c-bg);
+  background-color: var(--vp-c-bg-soft);
 }
 
 /* 覆盖整个区域的透明链接（stretched link） */
@@ -244,7 +244,7 @@ const rows = computed(() => {
   flex-direction: column;
   border: 1px solid var(--vp-c-divider);
   border-radius: 0.5rem;
-  background-color: var(--vp-c-bg-soft);
+  background-color: var(--vp-c-bg);
   padding: 1.25rem;
 }
 

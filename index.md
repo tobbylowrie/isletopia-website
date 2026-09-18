@@ -48,7 +48,10 @@ isHome: true
 <HomeIntro />
 
 <!-- 第三屏 -->
-<HomeSteps />
+<HomeFeatures />
 
 <!-- 第四屏 -->
+<HomeSteps />
+
+<!-- 第五屏 -->
 <ReviewWall />

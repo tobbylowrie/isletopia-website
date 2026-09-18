@@ -60,7 +60,7 @@ const clients = [
 <style scoped>
 .home-steps {
   padding: 4rem 1.5rem 5rem;
-  background-color: var(--vp-c-bg-soft);
+  background-color: var(--vp-c-bg);
 }
 
 @media (min-width: 48rem) {
@@ -103,7 +103,7 @@ const clients = [
   align-items: flex-start;
   border: 1px solid var(--vp-c-divider);
   border-radius: 0.5rem;
-  background-color: var(--vp-c-bg);
+  background-color: var(--vp-c-bg-soft);
   padding: 1.5rem;
 }
 
