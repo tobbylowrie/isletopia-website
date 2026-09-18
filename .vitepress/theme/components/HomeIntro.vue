@@ -32,7 +32,7 @@
 
 @media (min-width: 48rem) {
   .home-intro {
-    padding: 5rem 2rem;
+    padding: 5rem 6rem;
   }
 }
 
@@ -80,7 +80,7 @@
 
 .home-intro__image {
   width: 100%;
-  max-width: 24rem;
+  /* max-width: 24rem; */
   height: auto;
   margin: 0 auto;
   justify-self: center;

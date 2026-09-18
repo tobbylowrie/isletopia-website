@@ -61,7 +61,7 @@ const features = [
 
 @media (min-width: 48rem) {
   .home-features {
-    padding: 5rem 2rem 6rem;
+    padding: 5rem 6rem 6rem;
   }
 }
 

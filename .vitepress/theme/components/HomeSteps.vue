@@ -65,7 +65,7 @@ const clients = [
 
 @media (min-width: 48rem) {
   .home-steps {
-    padding: 5rem 2rem 6rem;
+    padding: 5rem 6rem 6rem;
   }
 }
 
