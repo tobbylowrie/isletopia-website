@@ -46,11 +46,16 @@ const clients = [
 
         <li class="home-steps__card">
           <span class="home-steps__num" aria-hidden="true">3</span>
-          <h3 class="home-steps__card-title">加入我们的社区</h3>
+          <h3 class="home-steps__card-title">加入社区，寻求帮助</h3>
           <p class="home-steps__card-text">
-            加入 QQ 群，获取最新活动通知、聊天交流、问题反馈。
+            首次入服连不上、不会开局、找不到物资...
+            立刻加入 QQ 群，总有大佬乐意帮忙解答。
           </p>
           <a href="/join-us" class="home-steps__cta">加入 QQ 群</a>
+          <a href="/guide/beginner/入服教程" class="home-steps__guide">
+            入服教程
+            <span aria-hidden="true">→</span>
+          </a>
         </li>
       </ol>
     </div>
@@ -176,5 +181,17 @@ const clients = [
 
 .home-steps__cta:hover {
   background-color: var(--vp-c-brand-2);
+}
+
+.home-steps__guide {
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+  transition: color 0.25s;
+}
+
+.home-steps__guide:hover {
+  color: var(--vp-c-brand-2);
 }
 </style>
