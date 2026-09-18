@@ -54,14 +54,6 @@ const rows = computed(() => {
 
 <template>
   <section class="review-wall">
-    <!-- 覆盖整个区域的链接：点击任意位置跳转到 MC 百科页面 -->
-    <a
-      class="review-wall__link"
-      href="https://play.mcmod.cn/sv20187897.html"
-      target="_blank"
-      rel="noopener"
-      aria-label="前往 MC 百科查看玩家评价"
-    ></a>
     <div class="review-wall__inner">
       <h2 class="review-wall__title">来自玩家的肯定</h2>
       <!-- <p class="review-wall__subtitle">来自 MC 百科的玩家评价</p> -->
@@ -120,6 +112,16 @@ const rows = computed(() => {
           </div>
         </div>
       </div>
+
+      <p class="review-wall__source">
+        评论数据来源于：
+        <a
+          href="https://play.mcmod.cn/sv20187897.html"
+          target="_blank"
+          rel="noopener"
+          >MCMOD 服务器详情页</a
+        >
+      </p>
     </div>
   </section>
 </template>
@@ -128,17 +130,8 @@ const rows = computed(() => {
 .review-wall {
   /* 跑马灯滚动时长：数值越大，滚动越慢 */
   --review-marquee-duration: 1200s;
-  position: relative;
   padding: 4rem 1.5rem 5rem;
   background-color: var(--vp-c-bg-soft);
-}
-
-/* 覆盖整个区域的透明链接（stretched link） */
-.review-wall__link {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
 }
 
 @media (min-width: 48rem) {
@@ -158,6 +151,23 @@ const rows = computed(() => {
   font-weight: 700;
   text-align: center;
   color: var(--vp-c-text-1);
+}
+
+/* 数据来源注脚 */
+.review-wall__source {
+  margin: 2rem 0 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--vp-c-text-3);
+}
+
+.review-wall__source a {
+  color: var(--vp-c-brand-1);
+  transition: color 0.25s;
+}
+
+.review-wall__source a:hover {
+  color: var(--vp-c-brand-2);
 }
 
 .review-wall__subtitle {
@@ -203,11 +213,6 @@ const rows = computed(() => {
 /* 反向行：起始于第二份副本在位的位置，避免加载时整行空白 */
 .is-reverse .review-wall__track {
   animation-name: review-marquee-reverse;
-}
-
-/* 悬停暂停 */
-.review-wall__marquee:hover .review-wall__track {
-  animation-play-state: paused;
 }
 
 /* track 为两份卡片 + 中间 1rem 间隙，位移半份卡片宽度（-50% - 0.5rem）即可无缝循环 */
@@ -289,7 +294,8 @@ const rows = computed(() => {
   flex: 0 0 auto;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
-  color: var(--vp-c-brand-1);
+  /* 固定黄色，明暗主题下均按"金色评分"呈现 */
+  color: #eab308;
 }
 
 .review-card__title {
