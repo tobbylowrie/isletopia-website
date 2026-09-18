@@ -50,12 +50,16 @@ const relatedLinks = [
   { text: 'Minecraft官网', href: 'https://www.minecraft.net/zh-hans' },
   { text: 'Minecraft Wiki（中文）', href: 'https://zh.minecraft.wiki/' },
   { text: 'MODMC服务器列表详情页', href: 'https://play.mcmod.cn/sv20187897.html' },
-  { text: '苦力怕论坛宣传贴',href: 'https://klpbbs.com/thread-132596-1-1.html'},
-  { text: 'NameMC详情页', href: 'https://namemc.com/server/play.molean.com' }
+  { text: '苦力怕论坛宣传贴', href: 'https://klpbbs.com/thread-132596-1-1.html' },
+  { text: 'NameMC详情页', href: 'https://namemc.com/server/play.molean.com' },
+  { text: 'B站', href: 'https://space.bilibili.com/3546572702878559' },
+  { text: '抖音', href: 'https://v.douyin.com/6IAzNtm8BEU/' },
+  { text: '小红书', href: 'https://www.xiaohongshu.com/user/profile/67179c78000000001e001449' }
 ]
 
 // 均分两列，各自独立成列
-const linkColumns = [relatedLinks.slice(0, 2), relatedLinks.slice(2)]
+const mid = Math.ceil(relatedLinks.length / 2)
+const linkColumns = [relatedLinks.slice(0, mid), relatedLinks.slice(mid)]
 </script>
 
 <template>
