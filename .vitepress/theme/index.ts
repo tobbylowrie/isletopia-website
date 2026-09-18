@@ -7,6 +7,7 @@ import VideoBackground from './components/VideoBackground.vue'
 import CopyIp from './components/CopyIp.vue'
 import HomeIntro from './components/HomeIntro.vue'
 import HomeSteps from './components/HomeSteps.vue'
+import ReviewWall from './components/ReviewWall.vue'
 import QqJoinButton from './components/QqJoinButton.vue'
 import QrTooltip from './components/QrTooltip.vue'
 import SocialLinks from './components/SocialLinks.vue'
@@ -33,6 +34,7 @@ export default {
     app.component('CopyIp', CopyIp)
     app.component('HomeIntro', HomeIntro)
     app.component('HomeSteps', HomeSteps)
+    app.component('ReviewWall', ReviewWall)
     app.component('QqJoinButton', QqJoinButton)
     app.component('QrTooltip', QrTooltip)
     app.component('SocialLinks', SocialLinks)
