@@ -117,7 +117,8 @@ export const SIDEBAR: DefaultTheme.Sidebar = {
       items: [
         { text: '岛屿系统', link: '/wiki/系统功能/岛屿系统' },
         { text: '玩家系统', link: '/wiki/系统功能/玩家系统' },
-        { text: '经济系统', link: '/wiki/系统功能/经济系统' }
+        { text: '经济系统', link: '/wiki/系统功能/经济系统' },
+        { text: '装备与词条', link: '/wiki/系统功能/装备与词条' }
       ]
     },
     {
