@@ -3,7 +3,7 @@ import { execSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import { mcTextures, mcTextureAssets, craftingAssetsInlineLimit } from './mc-textures-plugin.mts'
+import { mcTextures, craftingAssetsInlineLimit } from './mc-textures-plugin.mts'
 import { LINKS, SEO, SITE_INFO } from './theme/config'
 
 // 「动态」页聚合的文章目录（须与 NewsFeed.vue 的 glob 保持一致）
@@ -56,12 +56,9 @@ export default defineConfig({
   sitemap: { hostname: SEO.hostname },
   // 仓库 README.md 是给 GitHub 看的说明，不作为站点页面构建/收录
   srcExclude: ['README.md'],
-  // 合成表页面（/crafting）的物品贴图虚拟模块与资产规则，见 mc-textures-plugin.mts
+  // 合成表页面（/crafting）的物品贴图虚拟模块，贴图由插件直接写入构建产物，见 mc-textures-plugin.mts
   vite: {
     plugins: [mcTextures()],
-    resolve: {
-      alias: [{ find: '@mc-textures', replacement: mcTextureAssets }]
-    },
     build: {
       assetsInlineLimit: craftingAssetsInlineLimit
     }
